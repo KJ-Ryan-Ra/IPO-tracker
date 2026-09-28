@@ -812,6 +812,7 @@ code{font-family:var(--mono);font-size:11.5px;background:var(--surface-2);paddin
     <th>최대주주등 전</th><th>최대주주등 후</th><th>변화</th></tr></thead><tbody></tbody></table></div>
   <p class="sr-note" style="font-size:11.5px;color:var(--ink-3);margin-top:8px;line-height:1.7">주) 공모비율 분모는 상장예정주식수(상장주선인 의무인수 포함 상장 후 발행주식수). 최대주주등은 자기주식·미등기임원·특수관계인 포함, 증권발행실적보고서 기준. 2011~2015년 공모 후 최대주주등은 원자료 미기재.</p>
 
+  <div id="sr-lg" style="display:none">
   <div class="eyebrow" style="margin-top:28px">대형법인 요건 · 상장주선인 의무인수 <span class="sub2">(코스닥 · 2016년~)</span></div>
   <div class="grid g4" id="lg-kpi"></div>
   <div class="grid g2" style="margin-top:14px">
@@ -821,10 +822,13 @@ code{font-family:var(--mono);font-size:11.5px;background:var(--surface-2);paddin
   <div style="margin-top:14px" class="tblwrap"><table id="t-lg">
     <thead><tr><th class="l">종목</th><th class="l">상장일</th><th class="l">상장유형</th><th>공모가 시총(억)</th><th class="l">대형법인 기준 충족</th><th class="l">면제 적용</th><th>의무인수 주수</th><th class="l">원문 근거</th></tr></thead><tbody></tbody></table></div>
 
+  </div>
+  <div id="sr-pb" style="display:none">
   <div class="eyebrow" style="margin-top:28px">추정실적 적용 사례 — 대상회사 연환산 × Peer 기준</div>
   <div class="grid g4" id="pb-kpi"></div>
   <div style="margin-top:14px" class="tblwrap"><table id="t-pb">
     <thead><tr><th class="l">종목</th><th class="l">시장</th><th class="l">상장일</th><th class="l">Multiple</th><th class="l">대상회사 적용 실적</th><th class="l">Peer 실적 기준</th><th class="l">구분</th></tr></thead><tbody></tbody></table></div>
+  </div>
 </section>
 
 <section id="p-ex" class="hidden">
@@ -2134,6 +2138,7 @@ SEC.push(function(){
 
   /* --- 대형법인 · 의무인수 --- */
   const G=DEALS.filter(d=>d.lgOk!=null||d.lgEx!=null);
+  {const w=$("#sr-lg"); if(w) w.style.display=D.years[ALLK].some(d=>d.lgOk!=null||d.lgEx!=null)?"":"none";}
   const on=x=>x==="O";
   const c=(a,b)=>G.filter(d=>on(d.lgOk)===a&&on(d.lgEx)===b).length;
   $("#lg-kpi").innerHTML=G.length?[
@@ -2162,6 +2167,7 @@ SEC.push(function(){
 
   /* --- 대상 연환산 × Peer --- */
   const P=DEALS.filter(d=>d.peerBasis!=null);
+  {const w=$("#sr-pb"); if(w) w.style.display=D.years[ALLK].some(d=>d.peerBasis!=null)?"":"none";}
   const pc=k=>P.filter(d=>d.pairCase===k).length;
   $("#pb-kpi").innerHTML=P.length?[
     kpi("대상회사 연환산",P.length+"건","원장 적용 실적 산출방식 기준"),
