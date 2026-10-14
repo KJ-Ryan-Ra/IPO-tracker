@@ -1083,6 +1083,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
     <div class="card">
       <div class="panel-hd"><h2>주관사별 파이프라인</h2><span class="note">대표주관 기준 · 진행 중</span></div>
       <div id="ch-pssp"></div>
+      <p id="pssp-fn" style="font-size:11px;color:var(--ink-3);margin-top:6px;line-height:1.6"></p>
       <div class="panel-hd" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)"><h2>승인 효력기간 임박</h2><span class="note">승인일 +6개월</span></div>
       <table id="t-psexp"><tbody></tbody></table>
     </div>
@@ -1151,7 +1152,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
     </div>
   </div>
   <p style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75">
-    주) 해당 연도에 상장을 마친 건을 대상으로 하였습니다.
+    주) 해당 연도에 상장을 마친 건을 대상으로 하였습니다. 주관사별 평균 소요는 대표주관 기준이며, 공동 대표주관 딜은 참여 증권사마다 1건씩 반영합니다.
   </p>
 </div>
 
@@ -2011,7 +2012,7 @@ SEC.push(function(){
     <td class="l"><span class="name">${d.name}</span></td><td>심사 ${d.rev}일</td><td>공모 ${d.off}일</td>
     <td>${d.rev+d.off}일</td></tr>`).join("");
   const bySp={};
-  rows.forEach(d=>{const k=(d.houses&&d.houses[0])||"—";(bySp[k]=bySp[k]||[]).push(d);});
+  rows.forEach(d=>((d.lead&&d.lead.length)?d.lead:["—"]).forEach(k=>{(bySp[k]=bySp[k]||[]).push(d);}));   // 공동 대표주관은 각 증권사에 1건씩
   const spk=Object.keys(bySp).filter(k=>bySp[k].length>=2).sort((a,b)=>avg(bySp[a],r=>r.rev)-avg(bySp[b],r=>r.rev));
   $("#t-leadsp tbody").innerHTML=spk.length?spk.map(k=>`<tr class="${k===FOCUS?"mine":""}">
     <td class="l"><span class="name">${k}</span></td><td>${bySp[k].length}건</td>
@@ -2180,7 +2181,8 @@ SEC.push(function(){
   /* ---- 주관사별 파이프라인 ---- */
   const GG=["심사중","공모대기","공모진행"];
   const sp={};
-  live.forEach(r=>{const k=r.lead;sp[k]=sp[k]||{심사중:0,공모대기:0,공모진행:0,t:0};sp[k][r.stage]++;sp[k].t++;});
+  const hsOf=r=>{const a=String(r.sponsor||"").split("+").map(x=>x.trim()).filter(x=>x&&x!=="—");return a.length?a:[r.lead||"—"];};   // 공동 대표주관은 각 증권사에 1건씩
+  live.forEach(r=>hsOf(r).forEach(k=>{sp[k]=sp[k]||{심사중:0,공모대기:0,공모진행:0,t:0};sp[k][r.stage]++;sp[k].t++;}));
   const sk=Object.keys(sp).sort((a,b)=>sp[b].t-sp[a].t);
   const W2=520,H2=Math.max(120,sk.length*24+28),L2=64,R2=44,T2=8;
   const s2=svg(W2,H2); const iw2=W2-L2-R2, rh2=24, mx2=Math.max(1,...sk.map(k=>sp[k].t));
@@ -2188,12 +2190,14 @@ SEC.push(function(){
     let x=L2; const y=T2+i*rh2+4,h=rh2-10;
     GG.forEach(g=>{ const v=sp[k][g]; if(!v)return; const w=v/mx2*iw2;
       const p=el("path",{d:hbarPath(x,y,Math.max(w,2),h,2),fill:SG[g],opacity:.88},s2);
-      bindTip(p,`<b>${k}</b><div class="r"><span>${g}</span><em>${v}건</em></div><div style="margin-top:4px;color:var(--ink-2)">${live.filter(r=>r.lead===k&&r.stage===g).map(r=>r.name).join(", ")}</div>`);
+      bindTip(p,`<b>${k}</b><div class="r"><span>${g}</span><em>${v}건</em></div><div style="margin-top:4px;color:var(--ink-2)">${live.filter(r=>hsOf(r).includes(k)&&r.stage===g).map(r=>r.name).join(", ")}</div>`);
       x+=w+1.5; });
     s2.appendChild(txt(L2-9,y+h/2+4,k,{"text-anchor":"end","font-size":10,fill:k===FOCUS?"var(--accent)":"var(--ink-2)","font-weight":k===FOCUS?600:400}));
     s2.appendChild(txt(x+6,y+h/2+4,sp[k].t+"건",{"font-size":9.5,fill:"var(--ink-3)"}));
   });
   $("#ch-pssp").innerHTML="";$("#ch-pssp").appendChild(s2);
+  { const tot=sk.reduce((a,k)=>a+sp[k].t,0), co=live.filter(r=>hsOf(r).length>1);
+    $("#pssp-fn").textContent=co.length?`주) 공동 대표주관 딜(${co.length}건)은 참여 증권사마다 1건씩 집계해, 막대 합계(${tot}건)가 위 「예심 진행 중」 ${live.length}건보다 많습니다.`:"주) 공동 대표주관 딜은 참여 증권사마다 1건씩 집계합니다."; }
 
   /* ---- 효력기간 임박 ---- */
   const exp=PRESUB.filter(r=>r.exp).sort((a,b)=>a.expLeft-b.expLeft).slice(0,6);
