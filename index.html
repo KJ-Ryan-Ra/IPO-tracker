@@ -1563,6 +1563,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
   @media(max-width:1000px){#p-es .es-kpis{grid-template-columns:repeat(2,1fr)}}
   </style>
   <div class="eyebrow">신고서 추정실적 달성률 <span class="sub2" id="es-sub"></span></div>
+  <div class="es-fn" id="es-note" style="display:none;margin:-6px 0 12px;color:var(--ink-2)"></div>
   <div class="es-bar">
     <span class="lb">상장유형</span><div class="seg" id="es-ft"></div>
     <span class="lb" style="margin-left:8px">추정 적용 방식</span><div class="seg" id="es-fp"><button data-v="" aria-pressed="true">전체</button><button data-v="현가화" aria-pressed="false">현가화</button><button data-v="목표연도 추정" aria-pressed="false">목표연도 추정</button></div>
@@ -4104,6 +4105,7 @@ document.addEventListener('keydown',function(e){if(e.key!=='/'||e.ctrlKey||e.met
     if(!pn||pn.classList.contains("hidden")){render.dirty=true;return;} render.dirty=false;
     QA('#es-ft button').forEach(c=>c.setAttribute('aria-pressed',c.dataset.v===F.t));QA('#es-fp button').forEach(c=>c.setAttribute('aria-pressed',c.dataset.v===F.p));
     const R=sel(),S=stats(R),Y=yr();
+    {const nt=Q('#es-note');if(Y!==ALL&&!ALLD.some(d=>d.yr==+Y)){nt.style.display='';nt.innerHTML=`${Y}년 상장 딜은 목표연도(2025년 이하)가 아직 도래하지 않아 집계 대상이 없습니다. <a href="#" id="es-go" style="color:var(--accent)">종합으로 보기</a>`;Q('#es-go').onclick=e=>{e.preventDefault();const b=document.querySelector(`#yr-sel button[data-y="${ALL}"]`);if(b)b.click();};}else nt.style.display='none';}
     Q('#es-sub').textContent=`${Y===ALL?'전체 연도':Y+'년 상장'} · ${F.t||'전체 유형'} · ${F.l||'전체 주관사'} · ${R.length}건 · 실적 기준 ${E.asof}`;
     Q('#es-kpis').innerHTML=[['대상 딜',S.n+'건',`달성률 산정 가능 ${S.nv}건`],['적용 실적 달성률 중앙값',`<span class="${cls(S.med)}">${P(S.med)}</span>`,'실현 실적 ÷ 적용 실적'],['70% 이상 달성 비율',P(S.hit),`100% 이상 ${P(S.h100)}`],['목표연도에 적자',P(S.loss),'평가 지표 실적 기준'],['매출 달성률 중앙값',P(S.rev),`n=${S.nr}`]].map(k=>`<div class="kpi"><span class="lbl">${k[0]}</span><span class="val" style="font-size:21px">${k[1]}</span><span class="foot">${k[2]}</span></div>`).join('');
     // c0
