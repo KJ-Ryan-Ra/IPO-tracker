@@ -1591,7 +1591,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 <style>
 /* 사이드 메뉴 아이콘(중복 방지): 상장 후 수익률 ↗ · 추정실적 달성률 % · 보호예수 해제 ⊟ */
 :root .sidebar .tab[data-t="pf"]::before{content:"↗"}:root .sidebar .tab[data-t="es"]::before{content:"%"}:root .sidebar .tab[data-t="oh"]::before{content:"⊟"}
-#p-oh{--pos:#4f8ff0;--neg:#e0524a}#p-oh .pos{color:var(--pos)}#p-oh .neg{color:var(--neg)}
+#p-oh{--pos:var(--b500);--neg:var(--rd500)}#p-oh .pos{color:var(--pos)}#p-oh .neg{color:var(--neg)}
 #p-oh .es-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 12px}#p-oh .es-bar .lb{font-size:11.5px;color:var(--ink-3)}
 #p-oh .es-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}@media(max-width:1000px){#p-oh .es-kpis{grid-template-columns:repeat(2,1fr)}}
 #p-oh .es-leg{display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--ink-2);margin:6px 0 0}#p-oh .es-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
@@ -1606,7 +1606,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 </style><style id="oh-dyn"></style>
 
 <div class="eyebrow">보호예수 해제 캘린더 <span class="sub2" id="oh-sub"></span></div>
-<div class="es-bar"><span class="lb">기간</span><div class="seg" id="oh-f-rng"><button data-v="30">1개월</button><button data-v="90">3개월</button><button data-v="182">6개월</button><button data-v="365" aria-pressed="true">12개월</button><button data-v="9999">전체</button></div><span class="lb" style="margin-left:8px">시장</span><div class="seg" id="oh-f-mk"><button data-v="" aria-pressed="true">전체</button><button data-v="코스닥">코스닥</button><button data-v="유가증권">코스피</button></div><span class="lb" style="margin-left:8px">대표주관</span><select id="oh-f-ld"><option value="">전체</option></select></div>
+<div class="es-bar"><span class="lb">기간</span><div class="seg" id="oh-f-rng"><button data-v="9999">전체</button><button data-v="30">1개월</button><button data-v="90">3개월</button><button data-v="182">6개월</button><button data-v="365" aria-pressed="true">12개월</button></div><span class="lb" style="margin-left:8px">시장</span><div class="seg" id="oh-f-mk"><button data-v="" aria-pressed="true">전체</button><button data-v="코스닥">코스닥</button><button data-v="유가증권">코스피</button></div><span class="lb" style="margin-left:8px">대표주관</span><select id="oh-f-ld"><option value="">전체</option></select></div>
 <div class="es-bar"><span class="lb">구분</span><div class="seg" id="oh-f-c"></div><span class="lb" style="margin-left:8px">상장주식 대비</span><div class="seg" id="oh-f-p"><button data-v="0" aria-pressed="true">전체</button><button data-v="0.01">1% 이상</button><button data-v="0.05">5% 이상</button></div></div>
 <div class="es-kpis" id="oh-kpis"></div>
 <div class="card" style="margin-top:14px"><div class="panel-hd"><h2>월별 해제 예정 금액</h2><span class="note">억원 · 현재가 기준 · 구분별 누적</span></div><div id="oh-c-mon"></div><div class="es-leg" id="oh-leg"></div></div>
@@ -4210,7 +4210,7 @@ document.addEventListener('keydown',function(e){if(e.key!=='/'||e.ctrlKey||e.met
 const TIP=document.getElementById('tip'),PN=Q('#p-oh');const tipOff=()=>{if(TIP)TIP.style.opacity=0};PN.addEventListener('mousemove',e=>{const el=e.target.closest('[data-t]');if(el&&TIP){TIP.innerHTML=el.dataset.t;TIP.style.opacity=1;const p=12,w=TIP.offsetWidth,h=TIP.offsetHeight;let x=e.clientX+p,y=e.clientY+p;if(x+w>innerWidth-8)x=e.clientX-w-p;if(y+h>innerHeight-8)y=e.clientY-h-p;TIP.style.left=x+'px';TIP.style.top=y+'px'}else tipOff()});PN.addEventListener('mouseleave',tipOff);
 const P=v=>v==null?'–':(v*100).toFixed(1)+'%',PP=v=>v==null?'–':(v>0?'+':'')+(v*100).toFixed(1)+'%',PPp=v=>v==null?'–':(v>0?'+':'')+(v*100).toFixed(1)+'%p',N=v=>v==null?'–':Math.round(v).toLocaleString(),V=v=>v==null?'–':v.toLocaleString(undefined,{maximumFractionDigits:1});
 const cls=v=>v==null?'':v>=0?'pos':'neg';
-const CN=E.catn,CO=['M','V','O','I','E','U','X'],CC={M:'#4f8ff0',V:'#3fb984',O:'#9aa5b8',I:'#e0a43a',E:'#b48be8',U:'#5bc0de',X:'#6b7280'};
+const CN=E.catn,CO=['M','V','O','I','E','U','X'],CC={M:'var(--s1)',V:'var(--s3)',O:'var(--ink-3)',I:'var(--o5)',E:'var(--s6)',U:'var(--s4)',X:'var(--line)'};
 const _n=new Date(),TODAY=new Date(_n.getFullYear()+'-'+String(_n.getMonth()+1).padStart(2,'0')+'-'+String(_n.getDate()).padStart(2,'0'));const dd=s=>Math.round((new Date(s)-TODAY)/864e5);
 const F={rng:365,mk:'',ld:'',c:'',p:0};let PS=10,PG=0,sk='d',sd=1;
 Q('#oh-f-c').innerHTML='<button data-v="" aria-pressed="true">전체</button>'+CO.map(c=>`<button data-v="${c}">${CN[c]}</button>`).join('');
@@ -4227,7 +4227,7 @@ function render(){const R=sel();const tv=R.reduce((a,r)=>a+(r.val||0),0);const b
   const agg=ms.map(m=>{const o={m};CO.forEach(c=>o[c]=0);R.filter(r=>r.d.slice(0,7)==m).forEach(r=>o[r.c]+=r.val||0);o.t=CO.reduce((a,c)=>a+o[c],0);o.n=new Set(R.filter(r=>r.d.slice(0,7)==m).map(r=>r.n)).size;return o});
   const W=1200,H=260,mx=Math.max(1,...agg.map(a=>a.t)),bw=(W-80)/agg.length,Y=v=>20+190*(1-v/mx);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
   [0,.5,1].forEach(f=>s+=`<line class="ax" x1="60" x2="${W}" y1="${Y(mx*f)}" y2="${Y(mx*f)}"/><text x="0" y="${Y(mx*f)+4}">${V(Math.round(mx*f))}</text>`);
-  agg.forEach((a,i)=>{const x=70+i*bw;let y0=Y(0);CO.forEach(c=>{if(!a[c])return;const h=Y(0)-Y(a[c]);y0-=h;s+=`<rect x="${x+bw*.15}" y="${y0}" width="${bw*.7}" height="${Math.max(h,.5)}" fill="${CC[c]}" data-t="${a.m} · ${CN[c]}<br>${V(Math.round(a[c]))}억"/>`});
+  agg.forEach((a,i)=>{const x=70+i*bw;let y0=Y(0);CO.forEach(c=>{if(!a[c])return;const h=Y(0)-Y(a[c]);y0-=h;s+=`<rect x="${x+bw*.15}" y="${y0}" width="${bw*.7}" height="${Math.max(h,.5)}" style="fill:${CC[c]}" data-t="${a.m} · ${CN[c]}<br>${V(Math.round(a[c]))}억"/>`});
    s+=`<text x="${x+bw/2}" y="${Y(a.t)-5}" text-anchor="middle" class="val">${a.t?V(Math.round(a.t)):''}</text><text x="${x+bw/2}" y="${H-22}" text-anchor="middle">${a.m.slice(2).replace('-','.')}</text><text x="${x+bw/2}" y="${H-6}" text-anchor="middle">${a.n}종목</text>`});
   Q('#oh-c-mon').innerHTML=s+'</svg>';Q('#oh-leg').innerHTML=CO.map(c=>`<span><i style="background:${CC[c]}"></i>${CN[c]}</span>`).join('')}
  tbl()}
@@ -4243,7 +4243,7 @@ function tbl(){const q=Q('#oh-q').value.trim();let r=sel().filter(x=>!q||x.n.inc
 {const K=[['ALL','전체','var(--ink)'],['M',CN.M,CC.M],['V',CN.V,CC.V],['I',CN.I,CC.I],['O',CN.O,CC.O]].filter(k=>E.path[k[0]]);const W=560,H=240,xs=[...Array(32).keys()].map(i=>i-11);const all=K.flatMap(k=>E.path[k[0]]);const lo=Math.min(-0.08,...all),hi=Math.max(0.02,...all);
  const X=d=>50+(W-70)*(d+11)/31,Y=v=>15+190*(hi-v)/(hi-lo);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;[0,-0.04,-0.08].forEach(v=>s+=`<line class="ax" x1="45" x2="${W}" y1="${Y(v)}" y2="${Y(v)}"/><text x="0" y="${Y(v)+4}">${PP(v)}</text>`);
  s+=`<line x1="${X(0)}" x2="${X(0)}" y1="10" y2="${H-25}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>`;[-10,-5,0,5,10,15,20].forEach(d=>s+=`<text x="${X(d)}" y="${H-8}" text-anchor="middle">${d>0?'+':''}${d}</text>`);
- K.forEach(([k,l,c])=>{const p=E.path[k];s+=`<polyline fill="none" stroke="${c}" stroke-width="${k=='ALL'?2.5:1.6}" points="${p.map((v,i)=>X(xs[i])+','+Y(v)).join(' ')}"/>`;s+=`<circle cx="${X(20)}" cy="${Y(p[31])}" r="4" fill="${c}" data-t="${l} · +20일 ${PP(p[31])} (n=${E.np[k]})"/>`});
+ K.forEach(([k,l,c])=>{const p=E.path[k];s+=`<polyline fill="none" style="stroke:${c}" stroke-width="${k=='ALL'?2.5:1.6}" points="${p.map((v,i)=>X(xs[i])+','+Y(v)).join(' ')}"/>`;s+=`<circle cx="${X(20)}" cy="${Y(p[31])}" r="4" style="fill:${c}" data-t="${l} · +20일 ${PP(p[31])} (n=${E.np[k]})"/>`});
  Q('#oh-c-path').innerHTML=s+'</svg>';Q('#oh-leg2').innerHTML=K.map(([k,l,c])=>`<span><i style="background:${c}"></i>${l} (${E.np[k]})</span>`).join('')}
 const tb=(id,rows,lab,f)=>Q(id).innerHTML=`<thead><tr><th class="l">${lab}</th><th>이벤트</th><th>해제 전 5일</th><th>해제 후 5일</th><th>해제 후 20일</th><th>하락 비율</th></tr></thead><tbody>`+rows.map(r=>`<tr><td class="l">${f?f(r.k):r.k}</td><td>${r.n}</td><td class="${cls(r.pre5)}">${PP(r.pre5)}</td><td class="${cls(r.post5)}">${PP(r.post5)}</td><td class="${cls(r.post20)}">${PP(r.post20)}</td><td>${P(r.neg)}</td></tr>`).join('')+'</tbody>';
 tb('#oh-t-cat',E.stat.cat,'주 해제 주체',k=>CN[k]);tb('#oh-t-age',E.stat.age,'상장 후 경과');tb('#oh-t-sz',E.stat.sz,'해제 규모');
