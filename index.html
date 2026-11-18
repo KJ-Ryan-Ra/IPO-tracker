@@ -906,7 +906,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 </div></div>
 <div class="notice"><div class="wrap">
   <i class="nt-ico" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3.5 8.2v3.6h2.6l5.4 3.6V4.6L6.1 8.2H3.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14.2 7.3a3.6 3.6 0 0 1 0 5.4M16.1 5.4a6.2 6.2 0 0 1 0 9.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></i>
-  <strong class="nt-lb">공지사항</strong><span class="nt-tx">매일 오전, 오후, 공시 마감 후 총 3회에 걸쳐 업데이트 됩니다.<small class="nt-sub">현재는 관리자가 직접 push 해줘야 업데이트 사항이 반영되는 반자동 형식으로 최종 업데이트 시간을 참고해주시기 바랍니다.</small></span>
+  <strong class="nt-lb">공지사항</strong><span class="nt-tx">관리자가 직접 push 해줘야 업데이트 사항이 반영되는 반자동 형식으로 최종 업데이트 시간을 참고해주시기 바랍니다.</span>
   <button type="button" class="nt-today" id="nt-today" hidden></button>
 </div></div>
 <div class="caution"><div class="wrap"><details class="tg">
@@ -1656,6 +1656,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 #p-fa .fa-sim{display:inline-block;height:6px;border-radius:3px;background:var(--s1);vertical-align:middle;margin-right:6px}
 #p-fa .fa-tag{font-size:10.5px;padding:1px 6px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);margin-left:4px}
 #p-fa .fa-head{font-size:13.5px;color:var(--ink-2);margin:2px 2px 10px;line-height:1.6}.fa-head b{color:var(--ink)}.fa-head b.pos{color:var(--pos)}.fa-head b.neg{color:var(--neg)}
+#p-fa .fa-note:empty{display:none}
 #p-fa .fa-note{font-size:12px;color:var(--ink-2);margin:2px 0 12px}
 #p-fa .seg button[disabled]{opacity:.4}
 </style>
@@ -4421,13 +4422,13 @@ Q('#fa-s2').innerHTML='<option value="">전체</option>'+S2.map(s=>`<option>${s}
 const LIST=[...E.deals].sort((a,b)=>b.ld.localeCompare(a.ld));
 const OPTS=[...E.pipe.map(p=>({lab:`${p.n} (예심 ${p.st||'진행'})`,p,kind:'pipe'})),...E.prog.map(p=>({lab:`${p.n} (공모 진행, ${p.st||''})`,p,kind:'prog'})),...LIST.map(r=>({lab:`${r.n} (${r.ld.slice(0,7)} 상장)`,r,kind:'deal'}))];
 Q('#fa-dl').innerHTML=OPTS.map(o=>`<option value="${o.lab}">`).join('');
-let BASE=null;
+let BASE=null;const _nt=Q('#fa-bnote');new MutationObserver(()=>{_nt.style.display=_nt.innerHTML.trim()?'':'none'}).observe(_nt,{childList:true,subtree:true});
 function setBase(o){BASE=o;const nt=Q('#fa-bnote');
  if(!o){nt.textContent='조건을 직접 입력하거나 기준 딜을 고르세요.';return}
  if(o.kind==='deal'){const r=o.r;Q('#fa-s2').value=r.s2||'';Q('#fa-mk2').value=r.mk||'';Q('#fa-tp2').value=isTk(r)?'특례':'일반';Q('#fa-amt').value=r.amt?Math.round(r.amt):'';
-  nt.innerHTML=`기준: <b>${r.n}</b> (${r.ld} 상장, ${r.mk}, ${r.tp}, ${r.sc||r.s2||''}, 공모 ${N(r.amt)}억, 시총 ${N(r.cap)}억) — 기준 딜 자신은 결과에서 제외`}
+  nt.innerHTML=''}
  else{const p=o.p;if(p.mk)Q('#fa-mk2').value=/유가|코스피/.test(p.mk)?'유가증권':/코스닥/.test(p.mk)?'코스닥':'';if(p.tp)Q('#fa-tp2').value=/기술|성장|사업모델|특례/.test(p.tp)?'특례':'';
-  nt.innerHTML=`기준: <b>${p.n}</b> (${o.kind==='pipe'?'상장예비심사 중':'공모 진행 중'}) — 업종, 공모규모는 트래커에 아직 없어 직접 입력해 주세요`}
+  nt.innerHTML=''}
  sim()}
 Q('#fa-base').addEventListener('change',e=>{const o=OPTS.find(x=>x.lab===e.target.value)||OPTS.find(x=>(x.r||x.p).n===e.target.value.trim());setBase(o||null)});
 ['#fa-s2','#fa-mk2','#fa-tp2','#fa-amt','#fa-per2'].forEach(id=>Q(id).addEventListener('input',sim));
