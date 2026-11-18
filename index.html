@@ -1606,7 +1606,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 </style><style id="oh-dyn"></style>
 
 <div class="eyebrow">보호예수 해제 캘린더 <span class="sub2" id="oh-sub"></span></div>
-<div class="es-bar"><span class="lb">기간</span><div class="seg" id="oh-f-rng"><button data-v="9999">전체</button><button data-v="30">1개월</button><button data-v="90">3개월</button><button data-v="182">6개월</button><button data-v="365" aria-pressed="true">12개월</button></div><span class="lb" style="margin-left:8px">시장</span><div class="seg" id="oh-f-mk"><button data-v="" aria-pressed="true">전체</button><button data-v="코스닥">코스닥</button><button data-v="유가증권">코스피</button></div><span class="lb" style="margin-left:8px">대표주관</span><select id="oh-f-ld"><option value="">전체</option></select></div>
+<div class="es-bar"><span class="lb">기간</span><div class="seg" id="oh-f-rng"><button data-v="9999" aria-pressed="true">전체</button><button data-v="30">1개월</button><button data-v="90">3개월</button><button data-v="182">6개월</button><button data-v="365">12개월</button></div><span class="lb" style="margin-left:8px">시장</span><div class="seg" id="oh-f-mk"><button data-v="" aria-pressed="true">전체</button><button data-v="코스닥">코스닥</button><button data-v="유가증권">코스피</button></div><span class="lb" style="margin-left:8px">대표주관</span><select id="oh-f-ld"><option value="">전체</option></select></div>
 <div class="es-bar"><span class="lb">구분</span><div class="seg" id="oh-f-c"></div><span class="lb" style="margin-left:8px">상장주식 대비</span><div class="seg" id="oh-f-p"><button data-v="0" aria-pressed="true">전체</button><button data-v="0.01">1% 이상</button><button data-v="0.05">5% 이상</button></div></div>
 <div class="es-kpis" id="oh-kpis"></div>
 <div class="card" style="margin-top:14px"><div class="panel-hd"><h2>월별 해제 예정 금액</h2><span class="note">억원 · 현재가 기준 · 구분별 누적</span></div><div id="oh-c-mon"></div><div class="es-leg" id="oh-leg"></div></div>
@@ -4212,7 +4212,7 @@ const P=v=>v==null?'–':(v*100).toFixed(1)+'%',PP=v=>v==null?'–':(v>0?'+':'')
 const cls=v=>v==null?'':v>=0?'pos':'neg';
 const CN=E.catn,CO=['M','V','O','I','E','U','X'],CC={M:'var(--s1)',V:'var(--s3)',O:'var(--ink-3)',I:'var(--o5)',E:'var(--s6)',U:'var(--s4)',X:'var(--line)'};
 const _n=new Date(),TODAY=new Date(_n.getFullYear()+'-'+String(_n.getMonth()+1).padStart(2,'0')+'-'+String(_n.getDate()).padStart(2,'0'));const dd=s=>Math.round((new Date(s)-TODAY)/864e5);
-const F={rng:365,mk:'',ld:'',c:'',p:0};let PS=10,PG=0,sk='d',sd=1;
+const F={rng:9999,mk:'',ld:'',c:'',p:0};let PS=10,PG=0,sk='d',sd=1;
 Q('#oh-f-c').innerHTML='<button data-v="" aria-pressed="true">전체</button>'+CO.map(c=>`<button data-v="${c}">${CN[c]}</button>`).join('');
 [...new Set(E.cal.flatMap(r=>Array.isArray(r.lead)?r.lead:(r.lead?[r.lead]:[])))].sort().forEach(l=>Q('#oh-f-ld').insertAdjacentHTML('beforeend',`<option>${l}</option>`));
 const seg=(id,key,num)=>Q(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;QA(id+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));F[key]=num?+b.dataset.v:b.dataset.v;PG=0;render()});
@@ -4223,12 +4223,12 @@ function render(){const R=sel();const tv=R.reduce((a,r)=>a+(r.val||0),0);const b
  Q('#oh-sub').textContent=`${E.asof} 종가 기준`;
  Q('#oh-kpis').innerHTML=[['해제 예정',R.length+'건',`${names.size}개 종목`],['해제 금액',V(Math.round(tv))+'억',`현재가 기준`],['상장주식 5% 이상 해제',big.length+'건',`${new Set(big.map(r=>r.n)).size}개 종목`],['최대 해제',top?top.n:'–',top?`${top.d} · ${V(top.val)}억 · ${CN[top.c]}`:''],['과거 해제 후 20일',`<span class="${cls(E.stat.all.post20)}">${PP(E.stat.all.post20)}</span>`,`주가 수익률 중앙값 · n=${E.stat.all.n}`]].map(k=>`<div class="kpi"><span class="lbl">${k[0]}</span><span class="val" style="font-size:20px">${k[1]}</span><span class="foot">${k[2]}</span></div>`).join('');
  // monthly stacked
- {const ms=[];const d0=new Date(TODAY);for(let i=0;i<Math.min(13,Math.ceil(F.rng/30)+1);i++){const d=new Date(d0.getFullYear(),d0.getMonth()+i,1);ms.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))}
+ {const ms=[];const d0=new Date(TODAY);const lastD=R.reduce((m,r)=>r.d>m?r.d:m,'');const span=lastD?((+lastD.slice(0,4)-d0.getFullYear())*12+(+lastD.slice(5,7)-1-d0.getMonth())+1):1;const NM=F.rng>=9999?Math.max(1,Math.min(48,span)):Math.min(13,Math.ceil(F.rng/30)+1);for(let i=0;i<NM;i++){const d=new Date(d0.getFullYear(),d0.getMonth()+i,1);ms.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))}
   const agg=ms.map(m=>{const o={m};CO.forEach(c=>o[c]=0);R.filter(r=>r.d.slice(0,7)==m).forEach(r=>o[r.c]+=r.val||0);o.t=CO.reduce((a,c)=>a+o[c],0);o.n=new Set(R.filter(r=>r.d.slice(0,7)==m).map(r=>r.n)).size;return o});
   const W=1200,H=260,mx=Math.max(1,...agg.map(a=>a.t)),bw=(W-80)/agg.length,Y=v=>20+190*(1-v/mx);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
   [0,.5,1].forEach(f=>s+=`<line class="ax" x1="60" x2="${W}" y1="${Y(mx*f)}" y2="${Y(mx*f)}"/><text x="0" y="${Y(mx*f)+4}">${V(Math.round(mx*f))}</text>`);
   agg.forEach((a,i)=>{const x=70+i*bw;let y0=Y(0);CO.forEach(c=>{if(!a[c])return;const h=Y(0)-Y(a[c]);y0-=h;s+=`<rect x="${x+bw*.15}" y="${y0}" width="${bw*.7}" height="${Math.max(h,.5)}" style="fill:${CC[c]}" data-t="${a.m} · ${CN[c]}<br>${V(Math.round(a[c]))}억"/>`});
-   s+=`<text x="${x+bw/2}" y="${Y(a.t)-5}" text-anchor="middle" class="val">${a.t?V(Math.round(a.t)):''}</text><text x="${x+bw/2}" y="${H-22}" text-anchor="middle">${a.m.slice(2).replace('-','.')}</text><text x="${x+bw/2}" y="${H-6}" text-anchor="middle">${a.n}종목</text>`});
+   {const dense=agg.length>16,show=!dense||i%2==0;s+=`<text x="${x+bw/2}" y="${Y(a.t)-5}" text-anchor="middle" class="val" style="font-size:${dense?9:11}px">${a.t&&(!dense||a.t>=mx*0.15)?V(Math.round(a.t)):''}</text>`+(show?`<text x="${x+bw/2}" y="${H-22}" text-anchor="middle">${a.m.slice(2).replace('-','.')}</text><text x="${x+bw/2}" y="${H-6}" text-anchor="middle">${a.n}종목</text>`:'')}});
   Q('#oh-c-mon').innerHTML=s+'</svg>';Q('#oh-leg').innerHTML=CO.map(c=>`<span><i style="background:${CC[c]}"></i>${CN[c]}</span>`).join('')}
  tbl()}
 const cols=[['d','해제일','l'],['n','종목','l'],['mk','시장','l'],['ld','상장일','l'],['c','구분','l'],['per','의무보유','l'],['sh','해제 주식수'],['pct','상장주식 대비'],['val','금액(억)'],['px','현재가'],['now','공모가 대비'],['lead','대표주관','l']];
@@ -4254,5 +4254,116 @@ render();
 const later=()=>setTimeout(()=>{tipOff();render()},0);const ths=Q('#theme-sw');if(ths)ths.addEventListener('click',later);const tb2=Q('#tabs .tab[data-t="oh"]');if(tb2)tb2.addEventListener('click',later);
 })();
 
-</script><!--/OH:JS--></body>
+</script><!--/OH:JS--><!--NAV:UI-->
+<style>
+/* ===== 사이드 메뉴 묶음 · 배지 (ipo-pipeline/nav/nav_tracker.py 가 넣음) ===== */
+.sidebar .nav-grp{margin-top:6px}
+.sidebar .nav-grp:first-child{margin-top:0}
+.sidebar .nav-gh{display:flex;align-items:center;gap:6px;width:100%;margin:0;padding:8px 10px 4px;border:0;background:transparent;cursor:pointer;
+  color:var(--text-tertiary);font:700 10.5px/1.2 var(--sans);letter-spacing:.06em;text-align:left;border-radius:var(--radius-md)}
+.sidebar .nav-gh:hover{color:var(--text-secondary)}
+.sidebar .nav-gh .cv{margin-left:auto;font-size:9px;transition:transform var(--duration-fast,.15s) ease}
+.sidebar .nav-grp.closed .nav-gh .cv{transform:rotate(-90deg)}
+.sidebar .nav-gh .gn{font-weight:600;letter-spacing:0;color:var(--text-tertiary);opacity:.8}
+.sidebar .nav-gb{display:flex;flex-direction:column;gap:3px}
+.sidebar .nav-grp.closed .nav-gb{display:none}
+.sidebar .nav-grp.empty{display:none}
+:root .sidebar .tab .nl{flex:1 1 auto;min-width:0}
+:root .sidebar .tab .nb::after{content:attr(data-v)}
+:root .sidebar .tab .nb{flex:none;font:700 10.5px/1 var(--sans);padding:3px 6px;border-radius:999px;background:var(--color-info-bg);color:var(--accent);margin-left:6px}
+:root .sidebar .tab .nb.hot{background:var(--accent);color:#fff}
+:root .sidebar .tab .nb.new{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:2px 5px;letter-spacing:.04em}
+@media (max-width:980px){
+  .sidebar .nav-grp,.sidebar .nav-gb{display:contents!important}
+  .sidebar .nav-gh{display:none}
+  :root .sidebar .tab .nb{margin-left:4px}
+}
+</style>
+<script>
+/* 배지는 ::after(data-v)로만 그려 버튼 textContent(통합 검색 색인)에 섞이지 않게 함
+   사이드 메뉴: IPO 진행 단계별 묶음 · 접기(기억) · 짧은 이름 · 알림 배지 · NEW 표시 */
+(function(){
+  const box=document.getElementById("tabs"); if(!box||box.dataset.nav) return; box.dataset.nav="1";
+  const G=[["요약",["td","ov"]],["상장 전 파이프라인",["ps","ud","pg","cal"]],["딜 구조 분석",["vl","sr","rk","pv"]],
+           ["상장 후 성과",["dl","pf","es","oh"]],["시장 · 하우스",["lt","ex"]]];
+  const SHORT={ps:t=>/결과/.test(t)?"예심 결과":"예심 진행현황",ud:()=>"예심 확약사항",pf:()=>"수익률"};
+  const NEW={es:"2026-12-02",oh:"2026-12-02"};                         // 이 날짜 전까지 NEW 표시
+  const KEY="ipoNavClosed", D=window.__DATA__||{};
+  const ls={get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}};
+  const pad=n=>String(n).padStart(2,"0"), dstr=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  const now=new Date(), TODAY=dstr(now), add=n=>{const d=new Date(now);d.setDate(d.getDate()+n);return dstr(d)};
+  const W7=add(6), WK7=add(7), P7=add(-7);
+
+  // ---- 배지 계산 ----
+  function badges(){
+    const b={};
+    try{ // 공모 일정: 오늘~6일 뒤 일정(신고서·수요예측·청약·납입·상장) 있는 회사 수
+      const rows=(D.kind&&D.kind.rows)||[]; const hit=(a,z)=>a&&(z||a)>=TODAY&&a<=W7;
+      const n=rows.filter(r=>hit(r.sub)||(r.dd&&hit(r.dd[0],r.dd[1]))||(r.sb&&hit(r.sb[0],r.sb[1]))||hit(r.pay)||hit(r.listed)).length;
+      if(n) b.cal=[n,`오늘부터 7일 안에 일정(수요예측·청약·납입·상장 등)이 있는 공모 ${n}건`,0];
+    }catch(e){}
+    try{ // 보호예수 해제: 7일 안 해제 예정 종목 수(상장주식 5% 이상이 있으면 강조)
+      const C=(window.__OH__&&window.__OH__.cal)||[]; const f=C.filter(r=>r.d>=TODAY&&r.d<=WK7);
+      const n=new Set(f.map(r=>r.n)).size, big=new Set(f.filter(r=>(r.pct||0)>=0.05).map(r=>r.n)).size;
+      if(n) b.oh=[n,`7일 안에 보호예수가 풀리는 종목 ${n}개`+(big?` (상장주식 5% 이상 ${big}개)`:""),big>0];
+    }catch(e){}
+    try{ // 예심: 최근 7일 신규 청구
+      const n=(D.presub||[]).filter(r=>r.req&&r.req>=P7&&r.req<=TODAY).length;
+      if(n) b.ps=["+"+n,`최근 7일 신규 상장예비심사 청구 ${n}건`,0];
+    }catch(e){}
+    return b;
+  }
+  const B=badges();
+
+  // ---- 메뉴 버튼 내용(짧은 이름 + 배지) ----
+  let busy=false;
+  function paint(t){
+    if(busy) return; busy=true;
+    const k=t.dataset.t, cur=t.querySelector(".nl"), full=cur?(t.dataset.full||cur.textContent):t.textContent.trim();
+    if(!cur) t.dataset.full=full;
+    const lab=SHORT[k]?SHORT[k](t.dataset.full):t.dataset.full;
+    let html=`<span class="nl">${lab}</span>`;
+    if(B[k]) html+=`<span class="nb${B[k][2]?" hot":""}" title="${B[k][1]}" data-v="${B[k][0]}"></span>`;
+    else if(NEW[k]&&TODAY<NEW[k]) html+=`<span class="nb new" title="새로 추가된 메뉴" data-v="NEW"></span>`;
+    t.innerHTML=html; t.title=t.dataset.full+(B[k]?" · "+B[k][1]:"");
+    busy=false;
+  }
+  const tabs=[...box.querySelectorAll(".tab")], byK=Object.fromEntries(tabs.map(t=>[t.dataset.t,t]));
+  // 다른 코드가 textContent를 바꾸면(예: 예심 진행현황 ↔ 결과) 다시 칠함
+  const mo=new MutationObserver(ms=>{ if(busy) return; const seen=new Set();
+    ms.forEach(m=>{const t=(m.target.nodeType===1?m.target:m.target.parentElement).closest(".tab"); if(t&&!seen.has(t)&&!t.querySelector(".nl")){seen.add(t); t.dataset.full=t.textContent.trim(); paint(t);} }); });
+
+  // ---- 묶음 만들기 ----
+  const closed=new Set(ls.get()); const used=new Set();
+  const frag=document.createDocumentFragment(), grps=[];
+  G.forEach(([name,keys],gi)=>{
+    const el=document.createElement("div"); el.className="nav-grp"; el.dataset.g=gi;
+    const h=document.createElement("button"); h.type="button"; h.className="nav-gh"; h.setAttribute("aria-expanded","true");
+    h.innerHTML=`<span>${name}</span><span class="gn"></span><span class="cv">▾</span>`;
+    const body=document.createElement("div"); body.className="nav-gb";
+    keys.forEach(k=>{ if(byK[k]){ body.appendChild(byK[k]); used.add(k);} });
+    el.append(h,body); frag.appendChild(el); grps.push(el);
+    h.addEventListener("click",()=>{ el.classList.toggle("closed"); h.setAttribute("aria-expanded",String(!el.classList.contains("closed")));
+      ls.set(grps.filter(g=>g.classList.contains("closed")).map(g=>g.querySelector(".nav-gh span").textContent)); });
+    if(closed.has(name)){ el.classList.add("closed"); h.setAttribute("aria-expanded","false"); }
+  });
+  tabs.filter(t=>!used.has(t.dataset.t)).forEach(t=>grps[grps.length-1].querySelector(".nav-gb").appendChild(t));   // 목록에 없는 새 탭은 맨 끝 묶음
+  box.innerHTML=""; box.appendChild(frag);
+  tabs.forEach(paint);
+  tabs.forEach(t=>mo.observe(t,{childList:true,characterData:true,subtree:true}));
+
+  // ---- 숨은 탭만 있는 묶음 감추기 · 선택된 탭이 접힌 묶음에 있으면 펼침 · 접힌 묶음엔 탭 수 표시 ----
+  function sync(){
+    grps.forEach(g=>{ const ts=[...g.querySelectorAll(".tab")], vis=ts.filter(t=>t.style.display!=="none");
+      g.classList.toggle("empty",!vis.length);
+      if(vis.some(t=>t.getAttribute("aria-selected")==="true")&&g.classList.contains("closed")){ g.classList.remove("closed"); g.querySelector(".nav-gh").setAttribute("aria-expanded","true"); }
+      g.querySelector(".gn").textContent=g.classList.contains("closed")?String(vis.length):""; });
+  }
+  new MutationObserver(sync).observe(box,{attributes:true,subtree:true,attributeFilter:["style","aria-selected","class"]});
+  sync();
+})();
+</script>
+
+<!--/NAV:UI-->
+</body>
 </html>
