@@ -1231,6 +1231,78 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
   <p id="pd-fn" style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75"></p>
 <!--/PD:SEC--></div>
 
+<div id="ps-deep"><!--PD2:SEC-->
+<style>
+.pd2-fn{font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75}
+.pd2-tb td{white-space:nowrap;font-variant-numeric:tabular-nums}
+.pd2-pb{display:inline-flex;height:8px;width:120px;border-radius:4px;overflow:hidden;vertical-align:middle;margin-right:8px;background:var(--surface-2)}
+.pd2-pb i{display:block;height:100%}
+.pd2-lg{display:flex;gap:14px;font-size:11.5px;color:var(--ink-3);margin:8px 0 0;flex-wrap:wrap}
+.pd2-lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.pd2-sec{margin-top:30px}
+#ps-deep svg text{font-family:var(--sans)}
+.pd2-warn{font-size:11.5px;color:var(--ink-3)}.pd2-warn:empty{display:none}
+.pd2-tb .sub2{color:var(--ink-3)}
+</style>
+<div class="eyebrow" style="margin-top:26px">심사 경과일별 최종 결과</div>
+<div class="pd-bar"><span class="pd-lbl">비교 기준 기간</span><div class="seg" id="pd2-per"></div><span class="pd-lbl" style="margin-left:6px">시장</span><div class="seg" id="pd2-mkt"></div><span class="pd2-warn" id="pd2-warn"></span></div>
+<div class="grid g6" id="pd2-k1"></div>
+<div style="margin-top:14px" class="card">
+  <div class="panel-hd"><h2>심사 경과일별 최종 결과 비중</h2><span class="note" id="pd2-n1"></span></div>
+  <div id="pd2-c1"></div>
+  <div class="pd2-lg"><span><i style="background:var(--b500)"></i>승인</span><span><i style="background:var(--am400)"></i>심사 철회</span><span><i style="background:var(--crit)"></i>미승인</span></div>
+</div>
+<p class="pd2-fn" id="pd2-f1"></p>
+
+<div class="eyebrow pd2-sec">결과 발표 예상 시점</div>
+<div class="grid g21">
+  <div class="card">
+    <div class="panel-hd"><h2>심사 진행중 딜별 예상 잔여기간</h2><span class="note" id="pd2-n2"></span></div>
+    <div class="tblwrap" style="border:0;max-height:560px"><table class="pd2-tb" id="pd2-t2"></table></div>
+  </div>
+  <div class="card">
+    <div class="panel-hd"><h2>경과일별 남은 기간</h2><span class="note">과거 딜 기준, 일</span></div>
+    <div id="pd2-c2"></div>
+    <div class="pd2-lg"><span><i style="background:var(--b500)"></i>중앙값</span><span><i style="background:color-mix(in srgb,var(--b500) 25%,transparent)"></i>25~75% 범위</span></div>
+  </div>
+</div>
+<p class="pd2-fn" id="pd2-f2"></p>
+
+<div class="eyebrow pd2-sec">거래소 심사 적체와 심사기간</div>
+<div class="grid g6" id="pd2-k3"></div>
+<div style="margin-top:14px" class="grid g21">
+  <div class="card">
+    <div class="panel-hd"><h2>월말 심사 진행중 건수</h2><span class="note">청구 후 결과 미확정 딜, 건</span></div>
+    <div id="pd2-c3a"></div>
+  </div>
+  <div class="card">
+    <div class="panel-hd"><h2>청구 시점 적체 구간별 심사기간</h2><span class="note" id="pd2-n3b"></span></div>
+    <div id="pd2-c3b"></div>
+    <div class="pd2-lg"><span><i style="background:var(--b500)"></i>구간별 중앙값</span><span><i style="background:var(--am400)"></i>현재 적체가 속한 구간</span></div>
+  </div>
+</div>
+<p class="pd2-fn" id="pd2-f3"></p>
+
+<div class="eyebrow pd2-sec">승인 후 상장까지</div>
+<div class="grid g6" id="pd2-k4"></div>
+<div style="margin-top:14px" class="grid g2">
+  <div class="card">
+    <div class="panel-hd"><h2>승인일부터 상장일까지 걸린 기간</h2><span class="note" id="pd2-n4a"></span></div>
+    <div id="pd2-c4a"></div>
+  </div>
+  <div class="card">
+    <div class="panel-hd"><h2>승인 연도별 승인 후 결과</h2><span class="note">승인 건 대비 비중</span></div>
+    <div id="pd2-c4b"></div>
+    <div class="pd2-lg"><span><i style="background:var(--b500)"></i>상장</span><span><i style="background:var(--am400)"></i>효력만료</span><span><i style="background:var(--crit)"></i>공모철회</span><span><i style="background:var(--ink-3)"></i>상장철회</span><span><i style="background:color-mix(in srgb,var(--b500) 30%,transparent)"></i>승인 후 진행중</span></div>
+  </div>
+</div>
+<div style="margin-top:14px" class="card">
+  <div class="panel-hd"><h2>승인 후 공모 준비 중인 딜</h2><span class="note">공모대기, 공모진행</span></div>
+  <div class="tblwrap" style="border:0"><table class="pd2-tb" id="pd2-t4"></table></div>
+</div>
+<p class="pd2-fn" id="pd2-f4"></p>
+<!--/PD2:SEC--></div>
+
 <div id="ps-hist">
   <div class="eyebrow" style="margin-top:26px">연도별 예심 이력(청구일 기준)</div>
   <div class="grid g21">
@@ -2537,7 +2609,9 @@ function PDREF(){
 }
 SEC.push(function(){
   const host=$("#ps-diag"); if(!host) return;
-  const ly=String(D.liveYear), PAST=String(YEAR)!==ly&&YEAR!==ALLK; host.style.display=PAST?"none":""; if(PAST) return;
+  const ly=String(D.liveYear), PAST=String(YEAR)!==ly&&YEAR!==ALLK; host.style.display=PAST?"none":"";
+  try{ window.PD2_R&&window.PD2_R(); }catch(err){ console.error("pd2",err); }
+  if(PAST) return;
   document.querySelectorAll(".pd-per").forEach(x=>x.innerHTML=PD_SEG());
   document.querySelectorAll(".pd-warn").forEach(x=>x.textContent=PD_P==="1"?"※ 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 진행중임에 따라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.":"");
   const X=PDREF(), app=X.app, all=app.map(r=>r.d), qt=X.qt;
@@ -2588,6 +2662,165 @@ SEC.push(function(){
     (PD_P==="1"?`<br>주4) 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 진행중임에 따라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.`:"");
 });
 /*PD:END*/
+/*PD2:BEGIN*/
+/* 예심 심화 분석 — 경과일별 최종 결과, 예상 잔여기간, 거래소 적체, 승인 후 상장 (기간 토글은 PD2P 공유) */
+window.PD2_R=(function(){
+const Q=s=>document.querySelector(s); const AS=D.asof; let E=null,RES=[],PEND=[],PD2M="all",PD2P="all";   /* 이 섹션은 자체 기간 토글(기본 전체) */
+const PER2=[["all","전체"],["1","최근 1년"],["3","최근 3년"],["5","최근 5년"]];
+const day=(a,b)=>Math.round((new Date(b)-new Date(a))/86400000);
+const addD=(a,n)=>{const d=new Date(a);d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const addM=(a,k)=>{const d=new Date(a),day0=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+k);const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();d.setDate(Math.min(day0,last));return d.toISOString().slice(0,10)};
+const monB=(a,b)=>{let k=1;while(k<24&&b>addM(a,k))k++;return k};
+const fmt=s=>s?s.replace(/-/g,'.'):'—';
+const srt=a=>a.slice().sort((x,y)=>x-y);
+const qt=(a,q)=>{a=srt(a);if(!a.length)return null;const i=(a.length-1)*q,l=Math.floor(i),u=Math.ceil(i);return a[l]+(a[u]-a[l])*(i-l)};
+const R0=v=>v==null?'—':Math.round(v);
+const P=v=>v==null?'—':Math.round(v*100)+'%';
+const APP=new Set(['o','a','e','g','l']);
+const OUT=c=>APP.has(c)?'승인':c==='w'?'심사 철회':c==='n'?'미승인':null;
+const OC={'승인':'var(--b500)','심사 철회':'var(--am400)','미승인':'var(--crit)'};
+const MK=m=>m==='유가'?'유가증권':'코스닥';
+const kpi=a=>a.map(([l,v,f])=>`<div class="kpi"><span class="lbl">${l}</span><span class="val" style="font-size:20px">${v}</span><span class="foot">${f}</span></div>`).join('');
+
+const backlogAt=dt=>PEND.filter(r=>r.req<=dt&&(r.c==='p'?true:r.dec>dt)).length;
+const MKS=[['all','전체'],['코스닥','코스닥'],['유가','유가증권']];
+function segM(){ Q('#pd2-mkt').innerHTML=MKS.map(([k,l])=>`<button type="button" data-k="${k}" aria-pressed="${k===PD2M}">${l}</button>`).join('');
+  Q('#pd2-per').innerHTML=PER2.map(([k,l])=>`<button type="button" data-k="${k}" aria-pressed="${k===PD2P}">${l}</button>`).join('');
+  Q('#pd2-warn').textContent=PD2P==='1'?'※ 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 진행중임에 따라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.':''; }
+function init(){
+  const MKT=v=>(v==='유가'||v==='유가증권'||v==='코스피')?'유가':'코스닥';
+  const lst=[]; Object.keys(D.years).filter(y=>y!==ALLK).forEach(y=>(D.years[y]||[]).forEach(d=>{ if(d.approved&&d.listed) lst.push({n:d.name,m:MKT(d.market),ap:d.approved,ld:d.listed}); }));
+  const live=PRESUB.filter(p=>["심사중","공모대기","공모진행"].includes(p.stage)).map(p=>({n:p.name,m:p.mkt==="유가"?"유가":"코스닥",req:p.req,dec:p.dec||null,st:p.stage,el:p.revDays,pend:!!p.pending,exp:p.exp,el2:p.expLeft,pg:p.pgStage,h:p.sponsor,sp:p.spacM}));
+  E={pre:PREH(),live,lst};
+  RES=E.pre.filter(r=>r.dec&&r.req&&OUT(r.c)).map(r=>({...r,d:day(r.req,r.dec),o:OUT(r.c)})).filter(r=>r.d>0);
+  PEND=E.pre.filter(r=>r.req&&(r.c==='p'||r.dec));
+  const host=Q('#ps-deep'), TIP=document.getElementById('tip'), off=()=>{if(TIP)TIP.style.opacity=0};
+  host.addEventListener('mousemove',ev=>{const el=ev.target.closest('[data-t]');if(el&&TIP){TIP.innerHTML=el.dataset.t;TIP.style.opacity=1;const p=12,w=TIP.offsetWidth,h=TIP.offsetHeight;let x=ev.clientX+p,y=ev.clientY+p;if(x+w>innerWidth-8)x=ev.clientX-w-p;if(y+h>innerHeight-8)y=ev.clientY-h-p;TIP.style.left=x+'px';TIP.style.top=y+'px'}else off()});
+  host.addEventListener('mouseleave',off);
+  Q('#pd2-mkt').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b||b.dataset.k===PD2M)return;PD2M=b.dataset.k;segM();try{render()}catch(err){console.error('pd2',err)}});
+  Q('#pd2-per').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b||b.dataset.k===PD2P)return;PD2P=b.dataset.k;segM();try{render()}catch(err){console.error('pd2',err)}});
+}
+function render(){
+  let FR='';if(PD2P!=='all'){const f=new Date(AS);f.setFullYear(f.getFullYear()-(+PD2P));FR=f.toISOString().slice(0,10)}
+  const plb=PER2.find(x=>x[0]===PD2P)[1], mOK=m=>PD2M==='all'||m===PD2M;
+  const res=RES.filter(r=>r.req>=FR&&mOK(r.m));
+
+  /* ---------- ① 경과일별 최종 결과 ---------- */
+  const TH=[0,60,90,120,150,180,210,240];
+  const share=(arr)=>{const n=arr.length,c={'승인':0,'심사 철회':0,'미승인':0};arr.forEach(r=>c[r.o]++);return{n,c,p:k=>n?c[k]/n:null}};
+  const rowsA=TH.map(t=>({t,...share(res.filter(r=>r.d>=t))})), rows=rowsA.filter(x=>x.n>=10);
+  const r0=rowsA[0], r180=rowsA.find(x=>x.t===180), r120=rowsA.find(x=>x.t===120);
+  Q('#pd2-k1').innerHTML=kpi([
+    ['결과 확정 딜',r0.n.toLocaleString()+'건',plb+' 청구, '+(PD2M==='all'?'전체 시장':MK(PD2M))],
+    ['최종 승인률',P(r0.p('승인')),'청구 딜 전체'],
+    ['120일 넘긴 딜 승인률',P(r120.p('승인')),r120.n+'건 중'],
+    ['180일 넘긴 딜 승인률',`<span style="color:var(--crit)">${P(r180.p('승인'))}</span>`,r180.n+'건 중'],
+    ['180일 넘긴 딜 심사 철회',P(r180.p('심사 철회')),'자진 철회 비중'],
+    ['180일 넘긴 딜 미승인',P(r180.p('미승인')),'거래소 미승인 비중']]);
+  Q('#pd2-n1').textContent=`경과일 이상인 결과 확정 딜 기준`;
+  { const MB=innerWidth<700,W=MB?620:1200,rh=MB?40:34,L=MB?120:170,R=MB?50:70,T=8,H=rows.length*rh+30,iw=W-L-R; let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    [0,.25,.5,.75,1].forEach(v=>{const x=L+v*iw;s+=`<line x1="${x}" x2="${x}" y1="${T}" y2="${T+rows.length*rh}" stroke="var(--grid)"/><text x="${x}" y="${H-6}" text-anchor="middle" font-size="11" style="fill:var(--ink-3)">${v*100}%</text>`});
+    rows.forEach((x,i)=>{const y=T+i*rh+6,h=rh-12;let acc=0;
+      s+=`<text x="${L-12}" y="${y+h/2+4}" text-anchor="end" font-size="12.5" style="fill:var(--ink-2)">${x.t?x.t+'일 이상 경과':'전체 청구 딜'}</text>`;
+      ['승인','심사 철회','미승인'].forEach(k=>{const p=x.p(k)||0,w=p*iw;if(w<=0)return;
+        s+=`<rect x="${L+acc+(acc?1:0)}" y="${y}" width="${Math.max(w-(acc?1:0),0)}" height="${h}" rx="3" style="fill:${OC[k]};opacity:.9" data-t="<b>${x.t?x.t+'일 이상 경과한 딜':'전체 청구 딜'}</b><br>${k} ${x.c[k]}건 (${P(p)})<br>모수 ${x.n}건"/>`;
+        if(w>46)s+=`<text x="${L+acc+w/2}" y="${y+h/2+4}" text-anchor="middle" font-size="11" style="fill:#fff;font-weight:600;pointer-events:none">${P(p)}</text>`;acc+=w});
+      s+=`<text x="${L+iw+8}" y="${y+h/2+4}" font-size="11" style="fill:var(--ink-3)">${x.n}건</text>`});
+    Q('#pd2-c1').innerHTML=s+'</svg>'}
+  Q('#pd2-f1').innerHTML=`주1) 심사기간이 해당 일수 이상이었던 결과 확정 딜의 최종 결과 비중입니다. 승인은 승인 후 상장, 효력만료, 공모철회, 상장철회를 포함합니다.<br>주2) 심사 철회는 청구 기업의 자진 철회, 미승인은 거래소 심사 결과 미승인입니다. 현재 심사 진행중인 딜은 결과가 정해지지 않아 제외했고, 모수가 10건 미만인 구간은 표시하지 않았습니다.`;
+
+  /* ---------- ② 예상 잔여기간 ---------- */
+  const est=(m,e)=>{const S0=RES.filter(r=>r.req>=FR&&r.m===m&&r.d>e);if(S0.length<8)return{n:S0.length};const rm=S0.map(r=>r.d-e),sh=share(S0);return{n:S0.length,m50:qt(rm,.5),m25:qt(rm,.25),m75:qt(rm,.75),ap:sh.p('승인'),wd:sh.p('심사 철회'),no:sh.p('미승인')}};
+  const live=E.live.filter(x=>x.st==='심사중'&&x.pend&&mOK(x.m)).map(x=>({...x,E:est(x.m,x.el)})).sort((a,b)=>b.el-a.el);
+  Q('#pd2-n2').textContent=`심사 진행중 ${live.length}건, 경과일 긴 순`;
+  Q('#pd2-t2').innerHTML=`<thead><tr><th class="l">기업</th><th class="l">시장</th><th>경과</th><th>비교 딜</th><th class="l">최종 결과 비중</th><th>예상 잔여</th><th class="l">예상 결과 시점</th></tr></thead><tbody>`+
+    live.map(x=>{const e=x.E,ok=e.m50!=null;
+      const bar=ok?`<span class="pd2-pb" data-t="<b>${x.n}</b><br>경과 ${x.el}일 넘긴 같은 시장 딜 ${e.n}건<br>승인 ${P(e.ap)}, 심사 철회 ${P(e.wd)}, 미승인 ${P(e.no)}"><i style="width:${e.ap*100}%;background:var(--b500)"></i><i style="width:${e.wd*100}%;background:var(--am400)"></i><i style="width:${e.no*100}%;background:var(--crit)"></i></span><span class="sub2">승인 ${P(e.ap)}</span>`:'<span class="sub2">표본 부족</span>';
+      return `<tr><td class="l"><span class="name">${x.n}</span>${x.sp?` <span class="sub2">스팩${x.sp}</span>`:''}</td><td class="l">${x.m==='유가'?'<span class="chip c-mkt-kp">유가증권</span>':'<span class="chip c-mkt-kq">코스닥</span>'}</td><td><b>${x.el}일</b></td><td>${e.n}건</td><td class="l">${bar}</td>`+
+        `<td>${ok?`<b>${R0(e.m50)}일</b> <span class="sub2">(${R0(e.m25)}~${R0(e.m75)}일)</span>`:'<span class="sub2">—</span>'}</td><td class="l">${ok?fmt(addD(AS,Math.round(e.m50))).slice(2):'<span class="sub2">—</span>'}${ok?` <span class="sub2">(${fmt(addD(AS,Math.round(e.m25))).slice(5)}~${fmt(addD(AS,Math.round(e.m75))).slice(5)})</span>`:''}</td></tr>`}).join('')+'</tbody>';
+  { const ms=PD2M==='all'?null:PD2M, base=RES.filter(r=>r.req>=FR&&(!ms||r.m===ms));
+    const pts=[];for(let t=0;t<=240;t+=10){const S0=base.filter(r=>r.d>t);if(S0.length<25)break;const rm=S0.map(r=>r.d-t);pts.push({t,n:S0.length,m:qt(rm,.5),a:qt(rm,.25),b:qt(rm,.75)})}
+    const W=560,H=300,L=40,R=12,T=14,B=34,iw=W-L-R,ih=H-T-B,mxX=240,mxY=Math.max(60,Math.ceil(Math.max(...pts.map(p=>p.b))/30)*30);
+    const X=v=>L+v/mxX*iw,Y=v=>T+ih-v/mxY*ih;let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    for(let v=0;v<=mxY;v+=30)s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="${v?'var(--grid)':'var(--axis)'}"/><text x="${L-6}" y="${Y(v)+3.5}" text-anchor="end" font-size="10" style="fill:var(--ink-3)">${v}</text>`;
+    for(let v=0;v<=mxX;v+=60)s+=`<text x="${X(v)}" y="${H-16}" text-anchor="middle" font-size="10" style="fill:var(--ink-3)">${v}일</text>`;
+    s+=`<text x="${L+iw/2}" y="${H-2}" text-anchor="middle" font-size="10" style="fill:var(--ink-3)">현재 경과일</text>`;
+    if(pts.length>1){s+=`<path d="M${pts.map(p=>X(p.t)+','+Y(p.b)).join(' L')} L${pts.slice().reverse().map(p=>X(p.t)+','+Y(p.a)).join(' L')} Z" style="fill:color-mix(in srgb,var(--b500) 22%,transparent)"/>`;
+      s+=`<path d="M${pts.map(p=>X(p.t)+','+Y(p.m)).join(' L')}" fill="none" stroke="var(--b500)" stroke-width="2"/>`;
+      pts.forEach(p=>{s+=`<circle cx="${X(p.t)}" cy="${Y(p.m)}" r="9" fill="transparent" data-t="<b>${p.t}일 경과 시점</b><br>남은 기간 중앙값 ${R0(p.m)}일<br>25~75%: ${R0(p.a)}~${R0(p.b)}일<br>비교 딜 ${p.n}건"/>`})}
+    Q('#pd2-c2').innerHTML=s+'</svg>'}
+  Q('#pd2-f2').innerHTML=`주1) 예상 잔여기간은 같은 시장에서 현재 경과일보다 심사가 길었던 결과 확정 딜이 그 시점부터 결과(승인, 심사 철회, 미승인)까지 추가로 걸린 기간의 중앙값이며, 괄호는 25~75% 범위입니다.<br>주2) 비교 딜이 8건 미만이면 표본 부족으로 표시합니다. 예상 결과 시점은 기준일에 예상 잔여기간 중앙값을 더한 날짜로, 실제 심사위원회 일정과는 다를 수 있습니다.`;
+
+  /* ---------- ③ 심사 적체 ---------- */
+  const months=[];{let d=new Date(Math.max(new Date('2012-01-01'),FR?new Date(FR):0));d.setDate(1);const end=new Date(AS);while(d<=end){const me=new Date(d.getFullYear(),d.getMonth()+1,0);const k=me.toISOString().slice(0,10);months.push({k:k.slice(0,7),v:backlogAt(me>end?AS:k)});d.setMonth(d.getMonth()+1)}}
+  const nowB=backlogAt(AS);
+  const app=RES.filter(r=>r.o==='승인'&&r.req>=FR&&mOK(r.m)&&r.req>='2012-01-01').map(r=>({...r,b:backlogAt(r.req)}));
+  const edges=[0,15,25,35,45,1e9],G=edges.slice(0,-1).map((lo,i)=>{const hi=edges[i+1],a=app.filter(r=>r.b>=lo&&r.b<hi).map(r=>r.d);return{lo,hi,n:a.length,m:qt(a,.5),now:nowB>=lo&&nowB<hi}});
+  const rk=v=>{const a=srt(v),r=new Map();a.forEach((x,i)=>{if(!r.has(x))r.set(x,[]);r.get(x).push(i)});return v.map(x=>{const q=r.get(x);return q.reduce((s,y)=>s+y,0)/q.length})};
+  const sp=(()=>{if(app.length<10)return null;const a=rk(app.map(r=>r.b)),b=rk(app.map(r=>r.d)),n=a.length,ma=a.reduce((s,x)=>s+x,0)/n,mb=b.reduce((s,x)=>s+x,0)/n;let c=0,va=0,vb=0;for(let i=0;i<n;i++){c+=(a[i]-ma)*(b[i]-mb);va+=(a[i]-ma)**2;vb+=(b[i]-mb)**2}return c/Math.sqrt(va*vb)})();
+  const gl=G[0],gh=G[G.length-1],gn=G.find(g=>g.now);
+  Q('#pd2-k3').innerHTML=kpi([
+    ['현재 심사 진행중',nowB+'건','기준일 현재 결과 미확정'],
+    ['기간 중 월말 평균',R0(months.reduce((s,x)=>s+x.v,0)/months.length)+'건',plb],
+    ['적체 「매우 적음」 구간',gl.n>=5?R0(gl.m)+'일':'—',`심사중 ${gl.hi}건 미만일 때 청구`],
+    ['적체 「매우 많음」 구간',gh.n>=5?R0(gh.m)+'일':'—',`심사중 ${gh.lo}건 이상일 때 청구`],
+    ['현재 적체 구간',gn?R0(gn.m)+'일':'—',gn?(gn.hi>1e8?`심사중 ${gn.lo}건 이상 구간`:`심사중 ${gn.lo}~${gn.hi}건 구간`):''],
+    ['순위 상관계수',sp==null?'—':(sp>=0?'+':'')+sp.toFixed(2),'청구 시 적체와 심사기간']]);
+  { const W=820,H=300,L=34,R=24,T=14,B=30,iw=W-L-R,ih=H-T-B,mx=Math.ceil(Math.max(...months.map(x=>x.v))/10)*10,n=months.length,X=i=>L+i/(n-1)*iw,Y=v=>T+ih-v/mx*ih;
+    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;for(let v=0;v<=mx;v+=mx>60?20:10)s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="${v?'var(--grid)':'var(--axis)'}"/><text x="${L-6}" y="${Y(v)+3.5}" text-anchor="end" font-size="10" style="fill:var(--ink-3)">${v}</text>`;
+    const step=n>90?24:n>36?12:n>18?6:3;months.forEach((m,i)=>{if(i%step===0)s+=`<text x="${X(i)}" y="${H-10}" text-anchor="middle" font-size="10" style="fill:var(--ink-3)">${m.k.replace('-','.').slice(2)}</text>`});
+    s+=`<path d="M${X(0)},${Y(0)} L${months.map((m,i)=>X(i)+','+Y(m.v)).join(' L')} L${X(n-1)},${Y(0)} Z" style="fill:color-mix(in srgb,var(--b500) 16%,transparent)"/><path d="M${months.map((m,i)=>X(i)+','+Y(m.v)).join(' L')}" fill="none" stroke="var(--b500)" stroke-width="2"/>`;
+    const bw=iw/Math.max(1,n-1);months.forEach((m,i)=>{s+=`<rect x="${X(i)-bw/2}" y="${T}" width="${bw}" height="${ih}" fill="transparent" data-t="<b>${m.k.replace('-','.')}</b><br>월말 심사 진행중 ${m.v}건"/>`});
+    s+=`<circle cx="${X(n-1)}" cy="${Y(months[n-1].v)}" r="4.5" style="fill:var(--am400);stroke:var(--surface);stroke-width:2"/>`;
+    Q('#pd2-c3a').innerHTML=s+'</svg>'}
+  { const W=560,H=290,L=34,R=10,T=20,B=56,iw=W-L-R,ih=H-T-B,mx=Math.max(1,...G.filter(g=>g.n>=5).map(g=>g.m||0))*1.15,bw=iw/G.length;
+    Q('#pd2-n3b').textContent='승인 딜 중앙값, 일';
+    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="${L}" x2="${W-R}" y1="${T+ih}" y2="${T+ih}" stroke="var(--axis)"/>`;
+    const GL=['매우 적음','적음','보통','많음','매우 많음'];
+    G.forEach((g,i)=>{const cx=L+i*bw+bw/2,w=bw*.56,h=(g.m||0)/mx*ih,lb=g.hi>1e8?`${g.lo}건 이상`:`${g.lo}~${g.hi}건`, ok=g.n>=5;
+      if(!ok){ s+=`<text x="${cx}" y="${T+ih-8}" text-anchor="middle" font-size="10" style="fill:var(--ink-3)" data-t="<b>청구 시 적체 ${lb}</b><br>승인 딜 ${g.n}건으로 표본 적음">표본 적음</text><text x="${cx}" y="${T+ih+16}" text-anchor="middle" font-size="11" style="fill:var(--ink-3)">${GL[i]}${g.now?' (현재)':''}</text><text x="${cx}" y="${T+ih+30}" text-anchor="middle" font-size="9.5" style="fill:var(--ink-3)">(심사중 ${lb})</text>`; return; }
+      s+=`<rect x="${cx-w/2}" y="${T+ih-h}" width="${w}" height="${h}" rx="4" style="fill:${g.now?'var(--am400)':'var(--b500)'};opacity:.9" data-t="<b>청구 시 적체 ${lb}</b><br>심사기간 중앙값 ${R0(g.m)}일<br>승인 딜 ${g.n}건${g.now?'<br>현재 적체('+nowB+'건)가 속한 구간':''}"/>`+
+        `<text x="${cx}" y="${T+ih-h-6}" text-anchor="middle" font-size="11" style="fill:var(--ink-2);font-weight:600">${R0(g.m)}일</text><text x="${cx}" y="${T+ih+16}" text-anchor="middle" font-size="11" style="fill:${g.now?'var(--am400)':'var(--ink-2)'};font-weight:${g.now?600:400}">${GL[i]}${g.now?' (현재)':''}</text><text x="${cx}" y="${T+ih+30}" text-anchor="middle" font-size="9.5" style="fill:var(--ink-3)">(심사중 ${lb})</text>`});
+    Q('#pd2-c3b').innerHTML=s+'</svg>'}
+  Q('#pd2-f3').innerHTML=`주1) 적체는 해당 시점에 청구 후 결과(승인, 심사 철회, 미승인)가 나오지 않은 일반 IPO 딜 수(SPAC 합병 제외)이며, 2012년 이후 월말 기준입니다. 기간 버튼은 그래프의 시작 시점과 구간 분석 대상 딜에 함께 적용됩니다.<br>주2) 구간은 청구일 당시 거래소 심사 진행중 건수 기준(15건 미만, 15~25건, 25~35건, 35~45건, 45건 이상)이며, 승인 딜이 5건 미만인 구간은 표본 적음으로 표시합니다. 구간별 딜 수는 막대에 마우스를 올리면 표시되며, 순위 상관계수는 +1에 가까울수록 적체가 많을 때 심사가 길어지는 경향이 강하다는 뜻입니다.`;
+
+  /* ---------- ④ 승인 후 상장까지 ---------- */
+  const lst=E.lst.filter(r=>r.ap>=FR&&mOK(r.m)).map(r=>({...r,d:day(r.ap,r.ld),mb:monB(r.ap,r.ld)})).filter(r=>r.d>=0);
+  const ld=lst.map(r=>r.d), in6=lst.filter(r=>r.d<=183).length;
+  const ap=E.pre.filter(r=>APP.has(r.c)&&r.dec&&r.dec>=FR&&mOK(r.m));
+  const apOld=ap.filter(r=>r.dec<=addD(AS,-200)), cnt=k=>apOld.filter(r=>r.c===k).length;
+  Q('#pd2-k4').innerHTML=kpi([
+    ['상장 완료 딜',lst.length.toLocaleString()+'건','승인일, 상장일 확인 건'],
+    ['승인 후 상장 중앙값',(qt(ld,.5)/30.44).toFixed(1)+'개월',`${R0(qt(ld,.5))}일, 승인일부터 상장일까지`],
+    ['상위 25%',(qt(ld,.75)/30.44).toFixed(1)+'개월',`${R0(qt(ld,.75))}일, 이보다 오래 걸린 딜 25%`],
+    ['4개월 초과',P(lst.length?lst.filter(r=>r.mb>4).length/lst.length:null),'승인 후 상장까지 4개월 넘게 걸린 딜'],
+    ['승인 후 미상장 종료',P(apOld.length?(cnt('e')+cnt('g')+cnt('l'))/apOld.length:null),'효력만료, 공모철회, 상장철회'],
+    ['효력만료',P(apOld.length?cnt('e')/apOld.length:null),`승인 ${apOld.length}건 중 ${cnt('e')}건`]]);
+  Q('#pd2-n4a').textContent=`상장 완료 ${lst.length}건, 승인일 기준`;
+  { const lb=['1개월 이내','1~2개월','2~3개월','3~4개월','4~5개월','5~6개월','6개월 초과'];
+    const c=lb.map((l,i)=>lst.filter(r=>Math.min(r.mb,7)===i+1).length),W=560,H=280,L=26,R=8,T=20,B=40,iw=W-L-R,ih=H-T-B,mx=Math.max(1,...c),bw=iw/lb.length;
+    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="${L}" x2="${W-R}" y1="${T+ih}" y2="${T+ih}" stroke="var(--axis)"/>`;
+    lb.forEach((l,i)=>{const cx=L+i*bw+bw/2,w=bw*.6,h=c[i]/mx*ih,late=i===6;
+      const nm=late?lst.filter(r=>r.mb>6).sort((x,y)=>y.d-x.d).slice(0,6).map(r=>`${r.n} ${r.mb-1}개월+`).join('<br>'):'';
+      s+=`<rect x="${cx-w/2}" y="${T+ih-h}" width="${w}" height="${Math.max(h,c[i]?1:0)}" rx="3" style="fill:${late?'var(--crit)':'var(--b500)'};opacity:.88" data-t="<b>승인 후 ${l} 상장</b><br>${c[i]}건 (${P(lst.length?c[i]/lst.length:null)})${nm?'<br>'+nm:''}"/><text x="${cx}" y="${T+ih-h-5}" text-anchor="middle" font-size="10" style="fill:var(--ink-3)">${c[i]}</text><text x="${cx}" y="${T+ih+15}" text-anchor="middle" font-size="10" style="fill:${late?'var(--crit)':'var(--ink-3)'}">${l}</text>`});
+    Q('#pd2-c4a').innerHTML=s+'</svg>'}
+  { const ys=[...new Set(ap.map(r=>r.dec.slice(0,4)))].sort(),K=[['o','상장','var(--b500)'],['e','효력만료','var(--am400)'],['g','공모철회','var(--crit)'],['l','상장철회','var(--ink-3)'],['a','승인 후 진행중','color-mix(in srgb,var(--b500) 30%,transparent)']];
+    const W=560,H=280,L=34,R=8,T=14,B=30,iw=W-L-R,ih=H-T-B,bw=iw/Math.max(1,ys.length);
+    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;[0,.25,.5,.75,1].forEach(v=>{const y=T+ih-v*ih;s+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="${v?'var(--grid)':'var(--axis)'}"/><text x="${L-6}" y="${y+3.5}" text-anchor="end" font-size="10" style="fill:var(--ink-3)">${v*100}%</text>`});
+    ys.forEach((y,i)=>{const a=ap.filter(r=>r.dec.slice(0,4)===y),n=a.length,cx=L+i*bw+bw/2,w=Math.min(34,bw*.62);let acc=0;
+      K.forEach(([k,lb,col])=>{const v=a.filter(r=>r.c===k).length;if(!v)return;const h=v/n*ih;s+=`<rect x="${cx-w/2}" y="${T+ih-acc-h}" width="${w}" height="${Math.max(h-1,0.5)}" style="fill:${col}" data-t="<b>${y}년 승인</b><br>${lb} ${v}건 (${P(v/n)})<br>승인 ${n}건"/>`;acc+=h});
+      if(i%(ys.length>10?2:1)===0||i===ys.length-1)s+=`<text x="${cx}" y="${H-12}" text-anchor="middle" font-size="10" style="fill:var(--ink-3)">${ys.length>8?y.slice(2):y}</text>`});
+    Q('#pd2-c4b').innerHTML=s+'</svg>'}
+  { const pv=E.live.filter(x=>x.st!=='심사중'&&x.dec&&mOK(x.m)).map(x=>({...x,w:day(x.dec,AS)})).sort((a,b)=>(a.el2??999)-(b.el2??999));
+    const all=E.lst.filter(r=>mOK(r.m)).map(r=>day(r.ap,r.ld)).filter(d=>d>=0);
+    Q('#pd2-t4').innerHTML=`<thead><tr><th class="l">기업</th><th class="l">단계</th><th class="l">시장</th><th class="l">승인일</th><th>승인 후 경과</th><th>과거 대비</th><th class="l">효력만료</th><th class="l">상태</th></tr></thead><tbody>`+
+      (pv.map(x=>{const p=all.length?all.filter(d=>d<x.w).length/all.length:null,dl=x.el2;const st=dl==null?['—','c-neut']:dl<=30?['만료 임박','c-crit']:dl<=60?['주의','c-warn']:['여유','c-neut'];
+        return `<tr><td class="l"><span class="name">${x.n}</span>${x.pg?` <span class="sub2">${x.pg}</span>`:''}</td><td class="l"><span class="chip ${x.st==='공모진행'?'c-g500':'c-g300'}">${x.st}</span></td><td class="l">${x.m==='유가'?'<span class="chip c-mkt-kp">유가증권</span>':'<span class="chip c-mkt-kq">코스닥</span>'}</td><td class="l" style="font-family:var(--mono);font-size:11px">${fmt(x.dec)}</td><td><b>${x.w}일</b></td><td title="과거 상장 딜 중 승인 후 더 빨리 상장한 비율">${P(p)}</td><td class="l">${x.exp?`<span class="sub2">${fmt(x.exp)}</span> <b>D-${dl}</b>`:'<span class="sub2">—</span>'}</td><td class="l"><span class="chip ${st[1]}">${st[0]}</span></td></tr>`}).join('')||'<tr><td colspan="8" class="l sub2">해당 딜 없음</td></tr>')+'</tbody>'}
+  Q('#pd2-f4').innerHTML=`주1) 승인 후 상장 기간은 상장예비심사 승인일부터 상장일까지이며, 기간 버튼은 승인일 기준으로 적용합니다.<br>주2) 6개월은 상장예비심사 결과를 통지받은 날부터 신규상장신청서를 제출해야 하는 기한이므로 상장일은 6개월을 며칠 넘길 수 있으며, 효력 연장 승인 건(예: 미투젠)은 6개월을 크게 넘길 수 있습니다.<br>주3) 과거 대비는 과거 상장 딜 중 승인 후 현재 경과일보다 빨리 상장한 비율이며, 상태는 효력만료까지 30일 이하면 「만료 임박」, 60일 이하면 「주의」로 표시합니다.`;
+}
+return function(){ const host=Q('#ps-deep'), dg=Q('#ps-diag'); if(!host) return; host.style.display=dg?dg.style.display:''; if(host.style.display==='none') return; if(!E) init(); segM(); render(); };
+})();
+/*PD2:END*/
 /* ================= 예심 진행현황 ================= */
 SEC.push(function(){
   if(!PRESUB.length) return;
