@@ -1128,12 +1128,13 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
   </div>
   <div style="margin-top:14px" class="tblwrap"><table id="t-ps">
     <thead><tr><th class="l">기업</th><th class="l">단계</th><th class="l">시장</th><th class="l">청구일</th>
-    <th class="l">결과확정일</th><th>심사 소요</th><th class="l">효력만료</th><th class="l">주관 증권사</th></tr></thead><tbody></tbody>
+    <th class="l">결과확정일</th><th>심사 소요</th><th>과거 대비</th><th class="l">상태</th><th class="l">효력만료</th><th class="l">주관 증권사</th></tr></thead><tbody></tbody>
   </table></div>
   <p style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75">
     주1) 유가증권, 코스닥 시장 상장 건만 해당하며, 코넥스 시장 상장 건은 제외하였습니다.<br>
     주2) SPAC 신규상장, SPAC합병(존속·소멸), 재상장은 모두 제외하였습니다.<br>
-    주3) 이전상장은 코넥스→코스닥 건만 코스닥 상장으로 보아 포함하고, 코스닥→유가증권 이전상장은 제외하였습니다.
+    주3) 이전상장은 코넥스→코스닥 건만 코스닥 상장으로 보아 포함하고, 코스닥→유가증권 이전상장은 제외하였습니다.<br>
+    주4) 과거 대비는 같은 시장 과거 승인 딜 중 심사기간이 더 짧았던 비율이며, 상태는 심사 진행중인 건만 표시합니다(기준은 아래 「심사기간 진단」 주2).
   </p>
 </div>
 
@@ -1206,6 +1207,27 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
     주3) 출처: KIND 상장예비심사 기업 목록(2026-10-08 조회). 주관사명은 현재 사명·승계사 기준입니다.
   </p>
 </div>
+
+<div id="ps-diag"><!--PD:SEC-->
+  <div class="eyebrow" style="margin-top:26px">심사기간 진단</div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="panel-hd"><h2>심사기간 분포와 진행 중 딜 위치</h2><span class="note" id="pd-hn"></span></div>
+      <div id="ch-pdh"></div>
+      <div class="legend"><span><i style="background:var(--b500)"></i>과거 승인 딜</span><span><i style="background:var(--am400);border-radius:50%"></i>진행 중(통상, 지연)</span><span><i style="background:var(--crit);border-radius:50%"></i>진행 중(장기 지연)</span></div>
+    </div>
+    <div class="card">
+      <div class="panel-hd"><h2>청구 월별 심사기간</h2><span class="note">승인 딜 중앙값, 일</span></div>
+      <div id="ch-pdm"></div>
+      <div class="legend"><span><i style="background:var(--b500)"></i>중앙값</span><span><i style="background:var(--am400)"></i>상위 25% 월</span></div>
+    </div>
+  </div>
+  <div style="margin-top:14px" class="card">
+    <div class="panel-hd"><h2>상장유형별 심사기간</h2><span class="note">상장 완료 딜 기준</span></div>
+    <div class="tblwrap" style="border:0"><table id="t-pdt"><thead><tr><th class="l">상장유형</th><th>딜 수</th><th>중앙값</th><th>상위 25%</th><th>최장</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <p id="pd-fn" style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75"></p>
+<!--/PD:SEC--></div>
 
 <div id="ps-hist">
   <div class="eyebrow" style="margin-top:26px">연도별 예심 이력(청구일 기준)</div>
@@ -2489,6 +2511,73 @@ SEC.push(function(){
     상장일·공모가는 ${conf.length}건만 확인했고 나머지 ${P.length-conf.length}건은 KIND 신규상장기업현황 확인이 필요합니다.</p>`;
 });
 
+/*PD:BEGIN*/
+/* 예심 소요기간 진단 — 기준: 최근 3년 청구 승인 딜(승인 후 상장, 효력만료, 공모철회, 상장철회 포함), 같은 시장 */
+let PD_C=null;
+function PDREF(){
+  if(PD_C) return PD_C;
+  const day=(a,b)=>Math.round((new Date(b)-new Date(a))/86400000);
+  const fr=new Date(ASOF); fr.setFullYear(fr.getFullYear()-3); const FR=fr.toISOString().slice(0,10);
+  const APP=new Set(["o","a","e","g","l"]);
+  const app=PREH().filter(r=>r.dec&&r.req>=FR&&APP.has(r.c)).map(r=>Object.assign({},r,{d:day(r.req,r.dec)})).filter(r=>r.d>0);
+  const srt=a=>a.slice().sort((x,y)=>x-y);
+  const qt=(a,q)=>{a=srt(a);if(!a.length)return null;const i=(a.length-1)*q,l=Math.floor(i),u=Math.ceil(i);return a[l]+(a[u]-a[l])*(i-l);};
+  const REF={}; ["유가","코스닥"].forEach(m=>{const a=app.filter(r=>r.m===m).map(r=>r.d); REF[m]={a,m50:qt(a,.5),m75:qt(a,.75)};});
+  const mk=m=>m==="유가"?"유가":"코스닥";
+  const pct=(m,v)=>{const a=REF[mk(m)].a; return a.length?a.filter(d=>d<v).length/a.length:null;};
+  const st=(m,v)=>{const R=REF[mk(m)]; if(R.m50==null) return null; return v<=R.m50?["통상","c-neut"]:v<=R.m75?["지연","c-warn"]:["장기 지연","c-crit"];};
+  return PD_C={app,REF,pct,st,qt,FR};
+}
+SEC.push(function(){
+  const host=$("#ps-diag"); if(!host) return;
+  const ly=String(D.liveYear), PAST=String(YEAR)!==ly&&YEAR!==ALLK; host.style.display=PAST?"none":""; if(PAST) return;
+  const X=PDREF(), app=X.app, all=app.map(r=>r.d), qt=X.qt;
+  const live=PRESUB.filter(r=>r.stage==="심사중"&&r.pending).map(r=>({r,el:r.revDays,s:X.st(r.mkt,r.revDays)}));
+  const dot=x=>x.s&&x.s[0]==="장기 지연"?"var(--crit)":"var(--am400)";
+  $("#pd-hn").textContent=`과거 승인 ${all.length}건, 심사 진행중 ${live.length}건`;
+  /* 분포 + 진행 중 딜 위치 */
+  { const ed=[0,30,45,60,75,90,105,120,150,180,240,1e9], lb=["~30","30~45","45~60","60~75","75~90","90~105","105~120","120~150","150~180","180~240","240~"];
+    const cnt=lb.map((l,i)=>all.filter(d=>d>=ed[i]&&d<ed[i+1]).length);
+    const W=560,H=250,L=26,R=8,T=14,B=34,iw=W-L-R; const s=svg(W,H);
+    const bins=lb.map((l,i)=>live.filter(x=>x.el>=ed[i]&&x.el<ed[i+1]));
+    const dr=Math.max(1,...bins.map(b=>Math.ceil(b.length/5))), top=T+dr*11+6, ih=H-top-B;
+    const mx=Math.max(1,...cnt); const bw=iw/lb.length;
+    el("line",{x1:L,x2:W-R,y1:top+ih,y2:top+ih,stroke:"var(--axis)"},s);
+    lb.forEach((l,i)=>{ const cx=L+i*bw+bw/2, w=bw*.62, hh=cnt[i]/mx*ih;
+      if(cnt[i]){ const p=el("path",{d:barPath(cx-w/2,top+ih-hh,w,hh,3),fill:"var(--b500)",opacity:.88},s);
+        bindTip(p,`<b>심사기간 ${l}일</b><div class="r"><span>과거 승인</span><em>${cnt[i]}건</em></div><div class="r"><span>비중</span><em>${nf(cnt[i]/all.length*100,1)}%</em></div>`);}
+      s.appendChild(txt(cx,top+ih-hh-4,cnt[i],{"text-anchor":"middle","font-size":9,fill:"var(--ink-3)"}));
+      s.appendChild(txt(cx,top+ih+14,l,{"text-anchor":"middle","font-size":9,fill:"var(--ink-3)"}));
+      bins[i].forEach((x,j)=>{ const c=el("circle",{cx:cx-bw*.32+(j%5)*bw*.16,cy:T+4+Math.floor(j/5)*11,r:4.2,fill:dot(x),stroke:"var(--surface)","stroke-width":1.5},s);
+        bindTip(c,`<b>${x.r.name}</b><div class="r"><span>경과</span><em>${x.el}일</em></div><div class="r"><span>상태</span><em>${x.s?x.s[0]:"—"}</em></div><div class="r"><span>주관</span><em>${x.r.sponsor.replace(/\+/g,", ")}</em></div>`); });
+    });
+    s.appendChild(txt(L+iw/2,H-4,"심사기간(일)",{"text-anchor":"middle","font-size":9,fill:"var(--ink-3)"}));
+    $("#ch-pdh").innerHTML="";$("#ch-pdh").appendChild(s); }
+  /* 청구 월별 심사기간 중앙값 */
+  { const v=[...Array(12).keys()].map(i=>{const a=app.filter(r=>+r.req.slice(5,7)===i+1).map(r=>r.d);return{m:i+1,v:qt(a,.5),n:a.length};});
+    const hot=qt(v.filter(x=>x.v!=null).map(x=>x.v),.75);
+    const W=560,H=250,L=26,R=8,T=20,B=40,iw=W-L-R,ih=H-T-B; const s=svg(W,H);
+    const mx=Math.max(1,...v.map(x=>x.v||0))*1.1, bw=iw/12;
+    el("line",{x1:L,x2:W-R,y1:T+ih,y2:T+ih,stroke:"var(--axis)"},s);
+    v.forEach((x,i)=>{ const cx=L+i*bw+bw/2,w=bw*.6,hh=(x.v||0)/mx*ih;
+      if(x.v!=null){ const p=el("path",{d:barPath(cx-w/2,T+ih-hh,w,hh,3),fill:x.v>=hot?"var(--am400)":"var(--b500)",opacity:.88},s);
+        bindTip(p,`<b>${x.m}월 청구</b><div class="r"><span>심사기간 중앙값</span><em>${Math.round(x.v)}일</em></div><div class="r"><span>승인 딜</span><em>${x.n}건</em></div>`);
+        s.appendChild(txt(cx,T+ih-hh-4,Math.round(x.v)+"일",{"text-anchor":"middle","font-size":9,fill:"var(--ink-2)"}));}
+      s.appendChild(txt(cx,T+ih+14,x.m+"월",{"text-anchor":"middle","font-size":9,fill:"var(--ink-3)"}));
+      s.appendChild(txt(cx,T+ih+27,x.n+"건",{"text-anchor":"middle","font-size":8.5,fill:"var(--ink-3)"}));
+    });
+    $("#ch-pdm").innerHTML="";$("#ch-pdm").appendChild(s); }
+  /* 상장유형별 (상장 완료 딜) */
+  { const NM=s=>String(s||"").replace(/\(주\)|㈜|주식회사|\s/g,""), TP={};
+    Object.keys(D.years).filter(y=>y!==ALLK).forEach(y=>(D.years[y]||[]).forEach(d=>{ if(d.name&&d.type) TP[NM(d.name)]={t:d.type,ld:d.listed}; }));
+    const G={}; app.filter(r=>r.c==="o").forEach(r=>{const t=TP[NM(r.n)]; if(t&&t.ld>=r.req)(G[t.t]=G[t.t]||[]).push(r.d);});
+    const ks=Object.keys(G).sort((a,b)=>G[b].length-G[a].length);
+    $("#t-pdt tbody").innerHTML=ks.map(k=>{const a=G[k];return `<tr><td class="l">${k}</td><td>${a.length}건</td><td><b>${Math.round(qt(a,.5))}일</b></td><td>${Math.round(qt(a,.75))}일</td><td>${Math.max(...a)}일</td></tr>`;}).join("")||'<tr><td colspan="5" class="l sub2">—</td></tr>'; }
+  $("#pd-fn").innerHTML=`주1) 기준 기간: ${X.FR.replace(/-/g,".")} 이후 청구 건. 심사기간은 청구일부터 승인일까지이며, 승인 후 상장, 효력만료, 공모철회, 상장철회 건을 포함합니다.<br>`+
+    `주2) 상태: 경과일이 같은 시장(유가증권, 코스닥) 과거 승인 딜 중앙값 이하면 「통상」, 중앙값 초과 상위 25% 이하면 「지연」, 상위 25% 초과면 「장기 지연」으로 표시합니다.<br>`+
+    `주3) 상장유형별 심사기간은 상장까지 완료된 딜만 집계했습니다.`;
+});
+/*PD:END*/
 /* ================= 예심 진행현황 ================= */
 SEC.push(function(){
   if(!PRESUB.length) return;
@@ -2504,7 +2593,7 @@ SEC.push(function(){
     ["예심 진행 중",live.length+"건","심사중 · 공모대기 · 공모진행"],
     ["심사 진행중",cnt("심사중")+"건","결과확정 전"],
     ["공모 대기",cnt("공모대기")+"건","승인 후 신고서 미제출"],
-    ["심사 90일 초과",long+"건","심사중 "+cnt("심사중")+"건 중"],
+    ["장기 지연",/*PD*/PRESUB.filter(r=>r.stage==="심사중"&&r.pending&&(PDREF().st(r.mkt,r.revDays)||[])[0]==="장기 지연").length+"건","과거 승인 딜 상위 25% 초과"],
     ["철회 · 미승인",dead.length+"건","2025년 이후 청구건"],
     [FOCUS+" 주관",nhLive+"건","진행 중 "+live.length+"건 중"]
   ].map(([l,v,f])=>`<div class="kpi"><span class="lbl">${l}</span><span class="val" style="font-size:20px">${v}</span><span class="foot">${f}</span></div>`).join("");
@@ -2513,7 +2602,7 @@ SEC.push(function(){
   const rows=live.slice().sort((a,b)=>b.revDays+(b.postDays||0)-(a.revDays+(a.postDays||0)));
   rows.forEach(r=>{ r._rev=r.pending?0:r.revDays; r._wait=r.pending?r.revDays:Math.max(0,Math.round((ASOF-new Date(r.dec))/86400000)); r._tot=r._rev+r._wait; });
   rows.sort((a,b)=>b._tot-a._tot);
-  const W=560,H=rows.length*22+40,L=118,R=52,T=8;
+  const W=560,H=rows.length*22+52,L=118,R=92,T=8;/*PD*/
   const s=svg(W,H); const iw=W-L-R, rh=22;
   const mx=Math.max(60,Math.ceil(Math.max(...rows.map(r=>r._tot))/60)*60);
   for(let v=0;v<=mx;v+=60){el("line",{x1:L+v/mx*iw,x2:L+v/mx*iw,y1:T,y2:T+rh*rows.length,stroke:v?"var(--grid)":"var(--axis)"},s);
@@ -2532,8 +2621,11 @@ SEC.push(function(){
     if(w1>0){ const p1=el("path",{d:hbarPath(L,y,Math.max(w1,2),h,3),fill:"var(--b500)",opacity:.88},s); bindTip(p1,tt); }
     const p2=el("path",{d:hbarPath(L+(w1?w1+1.5:0),y,Math.max(w2,2),h,3),fill:c2,opacity:.88},s); bindTip(p2,tt);
     s.appendChild(txt(L-9,y+h/2+4,r.name.length>9?r.name.slice(0,8)+"…":r.name,{"text-anchor":"end","font-size":9.5,fill:"var(--ink-2)"}));
-    s.appendChild(txt(L+w1+w2+7,y+h/2+4,r._tot+"일",{"font-size":9,fill:"var(--ink-3)"}));
+    {const ps=r.pending?PDREF().st(r.mkt,r._tot):null;/*PD*/ s.appendChild(txt(L+w1+w2+7,y+h/2+4,r._tot+"일"+(ps?" "+ps[0]:""),{"font-size":9,fill:ps&&ps[0]==="장기 지연"?"var(--crit)":ps&&ps[0]==="지연"?"var(--am400)":"var(--ink-3)","font-weight":ps&&ps[0]!=="통상"?600:400}));}
   });
+  {/*PD*/ const RF=PDREF().REF["코스닥"]; [[RF.m50,"var(--ink-2)","코스닥 중앙값 "],[RF.m75,"var(--crit)","코스닥 상위 25% "]].forEach(([v,c,lb],k)=>{ if(v==null||v>mx) return; const x=L+v/mx*iw;
+      el("line",{x1:x,x2:x,y1:T,y2:T+rh*rows.length,stroke:c,"stroke-width":1.4,"stroke-dasharray":"4 3"},s);
+      s.appendChild(txt(x+3,T+rh*rows.length+(k?22:12),lb+Math.round(v)+"일",{"font-size":8.5,fill:c})); }); }
   $("#ch-ps").innerHTML="";$("#ch-ps").appendChild(s);
 
   /* ---- 주관사별 파이프라인 ---- */
@@ -2574,6 +2666,8 @@ SEC.push(function(){
     <td class="l" style="font-family:var(--mono);font-size:11px">${r.req}</td>
     <td class="l" style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">${r.dec||"—"}</td>
     <td>${r.revDays}일${r.pending?'<span class="sub2"> 경과</span>':""}</td>
+    ${(()=>{/*PD*/const X=PDREF(),p=r.revDays?X.pct(r.mkt,r.revDays):null,s=r.pending&&r.stage==="심사중"?X.st(r.mkt,r.revDays):null;
+      return `<td title="같은 시장 과거 승인 딜 중 심사기간이 더 짧았던 비율">${p==null?'<span class="sub2">—</span>':Math.round(p*100)+"%"}</td><td class="l">${s?`<span class="chip ${s[1]}">${s[0]}</span>`:'<span class="sub2">—</span>'}</td>`;})()}
     <td class="l">${r.exp?`<span class="sub2">${r.exp}</span> <b>D-${r.expLeft}</b>`:'<span class="sub2">—</span>'}</td>
     <td class="l">${r.sponsor.split("+").map(h=>`<span class="chip ${h===FOCUS?"c-nh":"c-neut"}">${h}</span>`).join(" ")}</td></tr>`).join("");
 
