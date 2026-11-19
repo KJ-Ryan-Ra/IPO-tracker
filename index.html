@@ -41,7 +41,7 @@
 @keyframes gsflash{0%,35%{background:rgba(250,178,25,.38);box-shadow:inset 3px 0 0 #d2992e}100%{background:transparent;box-shadow:none}}
 @media (max-width:1040px){.gs-hint{display:none}}@media (max-width:820px){.gs-lb span{display:none}.gs-in{max-width:none}}
 </style>
-</head>
+<style id="pd-css">.pd-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 12px}.pd-bar .pd-lbl{font-size:11.5px;color:var(--ink-3);white-space:nowrap}.pd-bar .seg{flex:0 0 auto}</style></head>
 <body>
 <style>
 :root{
@@ -1106,6 +1106,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 <section id="p-ps" class="hidden">
 <div id="ps-live">
   <div class="eyebrow">상장예비심사 진행현황</div>
+  <div class="pd-bar"><span class="pd-lbl">심사기간 비교 기준</span><div class="seg pd-per"></div></div><!--PD:BAR-->
   <div class="grid g6" id="ps-kpis"></div>
   <div style="margin-top:16px" class="grid g21">
     <div class="card">
@@ -1132,9 +1133,9 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
   </table></div>
   <p style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75">
     주1) 유가증권, 코스닥 시장 상장 건만 해당하며, 코넥스 시장 상장 건은 제외하였습니다.<br>
-    주2) SPAC 신규상장, SPAC합병(존속·소멸), 재상장은 모두 제외하였습니다.<br>
+    주2) SPAC 신규상장, SPAC합병(존속, 소멸), 재상장은 모두 제외하였습니다.<br>
     주3) 이전상장은 코넥스→코스닥 건만 코스닥 상장으로 보아 포함하고, 코스닥→유가증권 이전상장은 제외하였습니다.<br>
-    주4) 과거 대비는 같은 시장 과거 승인 딜 중 심사기간이 더 짧았던 비율이며, 상태는 심사 진행중인 건만 표시합니다(기준은 아래 「심사기간 진단」 주2).
+    주4) 과거 대비는 같은 시장 과거 승인 딜 중 심사기간이 더 짧았던 비율이며, 상태는 심사 진행중인 건만 표시합니다.
   </p>
 </div>
 
@@ -1203,13 +1204,14 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
   </table></div>
   <p style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75">
     주1) 유가증권, 코스닥 시장 상장예비심사 청구 건만 해당하며, 코넥스 시장은 제외하였습니다.<br>
-    주2) SPAC 신규상장, SPAC합병(존속·소멸), 재상장, 코스닥→유가증권 이전상장은 제외하였습니다.<br>
-    주3) 출처: KIND 상장예비심사 기업 목록(2026-10-08 조회). 주관사명은 현재 사명·승계사 기준입니다.
+    주2) SPAC 신규상장, SPAC합병(존속, 소멸), 재상장, 코스닥→유가증권 이전상장은 제외하였습니다.<br>
+    주3) 출처: KIND 상장예비심사 기업 목록(2026-10-08 조회). 주관사명은 현재 사명, 승계사 기준입니다.
   </p>
 </div>
 
 <div id="ps-diag"><!--PD:SEC-->
   <div class="eyebrow" style="margin-top:26px">심사기간 진단</div>
+  <div class="pd-bar"><span class="pd-lbl">비교 기준 기간</span><div class="seg pd-per"></div></div>
   <div class="grid g2">
     <div class="card">
       <div class="panel-hd"><h2>심사기간 분포와 진행 중 딜 위치</h2><span class="note" id="pd-hn"></span></div>
@@ -1260,7 +1262,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
   </table></div>
   <p style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.75">
     주1) 유가증권, 코스닥 시장 상장 건만 해당하며, 코넥스 시장 상장 건은 제외하였습니다.<br>
-    주2) SPAC 신규상장, SPAC합병(존속·소멸), 재상장은 모두 제외하였습니다.<br>
+    주2) SPAC 신규상장, SPAC합병(존속, 소멸), 재상장은 모두 제외하였습니다.<br>
     주3) 이전상장은 코넥스→코스닥 건만 코스닥 상장으로 보아 포함하고, 코스닥→유가증권 이전상장은 제외하였습니다.
   </p>
 </div>
@@ -2512,29 +2514,35 @@ SEC.push(function(){
 });
 
 /*PD:BEGIN*/
-/* 예심 소요기간 진단 — 기준: 최근 3년 청구 승인 딜(승인 후 상장, 효력만료, 공모철회, 상장철회 포함), 같은 시장 */
-let PD_C=null;
+/* 예심 소요기간 진단 — 기준: 전체 청구 승인 딜(승인 후 상장, 효력만료, 공모철회, 상장철회 포함), 같은 시장 */
+let PD_C=null, PD_P="1"; const PD_I=SEC.length;   /* SEC[PD_I]=진단 섹션, SEC[PD_I+1]=예심 진행현황 */
+const PD_PER=[["all","전체"],["1","최근 1년"],["3","최근 3년"],["5","최근 5년"]];
+const PD_LB=()=>(PD_PER.find(x=>x[0]===PD_P)||PD_PER[0])[1];
+function PD_SEG(){ return PD_PER.map(([k,l])=>`<button type="button" data-pd="${k}" aria-pressed="${k===PD_P}">${l}</button>`).join(""); }
+document.addEventListener("click",e=>{ const b=e.target.closest(".pd-per button"); if(!b||b.dataset.pd===PD_P) return;
+  PD_P=b.dataset.pd; PD_C=null; [PD_I+1,PD_I].forEach(i=>{ try{SEC[i]();}catch(err){console.error("pd",err);} }); try{sizePanes();}catch(err){} });
 function PDREF(){
   if(PD_C) return PD_C;
   const day=(a,b)=>Math.round((new Date(b)-new Date(a))/86400000);
-  const fr=new Date(ASOF); fr.setFullYear(fr.getFullYear()-3); const FR=fr.toISOString().slice(0,10);
   const APP=new Set(["o","a","e","g","l"]);
-  const app=PREH().filter(r=>r.dec&&r.req>=FR&&APP.has(r.c)).map(r=>Object.assign({},r,{d:day(r.req,r.dec)})).filter(r=>r.d>0);
+  let FR=""; if(PD_P!=="all"){ const f=new Date(ASOF); f.setFullYear(f.getFullYear()-(+PD_P)); FR=f.toISOString().slice(0,10); }
+  const app=PREH().filter(r=>r.dec&&r.req&&r.req>=FR&&APP.has(r.c)).map(r=>Object.assign({},r,{d:day(r.req,r.dec)})).filter(r=>r.d>0);
   const srt=a=>a.slice().sort((x,y)=>x-y);
   const qt=(a,q)=>{a=srt(a);if(!a.length)return null;const i=(a.length-1)*q,l=Math.floor(i),u=Math.ceil(i);return a[l]+(a[u]-a[l])*(i-l);};
   const REF={}; ["유가","코스닥"].forEach(m=>{const a=app.filter(r=>r.m===m).map(r=>r.d); REF[m]={a,m50:qt(a,.5),m75:qt(a,.75)};});
   const mk=m=>m==="유가"?"유가":"코스닥";
   const pct=(m,v)=>{const a=REF[mk(m)].a; return a.length?a.filter(d=>d<v).length/a.length:null;};
   const st=(m,v)=>{const R=REF[mk(m)]; if(R.m50==null) return null; return v<=R.m50?["통상","c-neut"]:v<=R.m75?["지연","c-warn"]:["장기 지연","c-crit"];};
-  return PD_C={app,REF,pct,st,qt,FR};
+  const F0=app.reduce((m,r)=>r.req<m?r.req:m,"9999"); return PD_C={app,REF,pct,st,qt,FR:FR||F0,all:!FR};
 }
 SEC.push(function(){
   const host=$("#ps-diag"); if(!host) return;
   const ly=String(D.liveYear), PAST=String(YEAR)!==ly&&YEAR!==ALLK; host.style.display=PAST?"none":""; if(PAST) return;
+  document.querySelectorAll(".pd-per").forEach(x=>x.innerHTML=PD_SEG());
   const X=PDREF(), app=X.app, all=app.map(r=>r.d), qt=X.qt;
   const live=PRESUB.filter(r=>r.stage==="심사중"&&r.pending).map(r=>({r,el:r.revDays,s:X.st(r.mkt,r.revDays)}));
   const dot=x=>x.s&&x.s[0]==="장기 지연"?"var(--crit)":"var(--am400)";
-  $("#pd-hn").textContent=`과거 승인 ${all.length}건, 심사 진행중 ${live.length}건`;
+  $("#pd-hn").textContent=`${PD_LB()} 승인 ${all.length}건, 심사 진행중 ${live.length}건`;
   /* 분포 + 진행 중 딜 위치 */
   { const ed=[0,30,45,60,75,90,105,120,150,180,240,1e9], lb=["~30","30~45","45~60","60~75","75~90","90~105","105~120","120~150","150~180","180~240","240~"];
     const cnt=lb.map((l,i)=>all.filter(d=>d>=ed[i]&&d<ed[i+1]).length);
@@ -2573,9 +2581,10 @@ SEC.push(function(){
     const G={}; app.filter(r=>r.c==="o").forEach(r=>{const t=TP[NM(r.n)]; if(t&&t.ld>=r.req)(G[t.t]=G[t.t]||[]).push(r.d);});
     const ks=Object.keys(G).sort((a,b)=>G[b].length-G[a].length);
     $("#t-pdt tbody").innerHTML=ks.map(k=>{const a=G[k];return `<tr><td class="l">${k}</td><td>${a.length}건</td><td><b>${Math.round(qt(a,.5))}일</b></td><td>${Math.round(qt(a,.75))}일</td><td>${Math.max(...a)}일</td></tr>`;}).join("")||'<tr><td colspan="5" class="l sub2">—</td></tr>'; }
-  $("#pd-fn").innerHTML=`주1) 기준 기간: ${X.FR.replace(/-/g,".")} 이후 청구 건. 심사기간은 청구일부터 승인일까지이며, 승인 후 상장, 효력만료, 공모철회, 상장철회 건을 포함합니다.<br>`+
+  $("#pd-fn").innerHTML=`주1) 기준 기간: ${X.all?X.FR.slice(0,4)+"년 이후 전체 청구 건":PD_LB()+"("+X.FR.replace(/-/g,".")+" 이후) 청구 건"}. 심사기간은 청구일부터 승인일까지이며, 승인 후 상장, 효력만료, 공모철회, 상장철회 건을 포함합니다.<br>`+
     `주2) 상태: 경과일이 같은 시장(유가증권, 코스닥) 과거 승인 딜 중앙값 이하면 「통상」, 중앙값 초과 상위 25% 이하면 「지연」, 상위 25% 초과면 「장기 지연」으로 표시합니다.<br>`+
-    `주3) 상장유형별 심사기간은 상장까지 완료된 딜만 집계했습니다.`;
+    `주3) 상장유형별 심사기간은 상장까지 완료된 딜만 집계했습니다.`+
+    (PD_P==="1"?`<br>주4) 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 중이라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.`:"");
 });
 /*PD:END*/
 /* ================= 예심 진행현황 ================= */
@@ -2593,7 +2602,7 @@ SEC.push(function(){
     ["예심 진행 중",live.length+"건","심사중 · 공모대기 · 공모진행"],
     ["심사 진행중",cnt("심사중")+"건","결과확정 전"],
     ["공모 대기",cnt("공모대기")+"건","승인 후 신고서 미제출"],
-    ["장기 지연",/*PD*/PRESUB.filter(r=>r.stage==="심사중"&&r.pending&&(PDREF().st(r.mkt,r.revDays)||[])[0]==="장기 지연").length+"건","과거 승인 딜 상위 25% 초과"],
+    ["장기 지연",/*PD*/PRESUB.filter(r=>r.stage==="심사중"&&r.pending&&(PDREF().st(r.mkt,r.revDays)||[])[0]==="장기 지연").length+"건",PD_LB()+" 승인 딜 상위 25% 초과"],
     ["철회 · 미승인",dead.length+"건","2025년 이후 청구건"],
     [FOCUS+" 주관",nhLive+"건","진행 중 "+live.length+"건 중"]
   ].map(([l,v,f])=>`<div class="kpi"><span class="lbl">${l}</span><span class="val" style="font-size:20px">${v}</span><span class="foot">${f}</span></div>`).join("");
@@ -2865,8 +2874,8 @@ SEC.push(window.__PSH__=function(){
   $("#psh-fn").innerHTML=[
     "주1) 대표주관(상장주선인) 기준입니다. 공동 대표주관 딜은 참여 증권사마다 1건씩 집계해, 주관사 합계가 전체 청구 건수보다 많을 수 있습니다.",
     "주2) 승인율 = 승인 ÷ (승인 + 미승인 + 철회). 철회에는 심사 철회와 승인 후 공모·상장 철회가 포함되며, 승인 후 효력기간 만료는 승인으로 봅니다."+(HASPD?" 심사 중인 건은 분모에서 제외했습니다.":""),
-    "주3) 주관사명은 현재 사명·승계사 기준입니다(예: 대우 → 미래에셋, 우리투자(구) → NH, 현대·KB투자 → KB, 동양 → 유안타).",
-    "주4) SPAC 신규상장, SPAC합병(존속·소멸), 재상장, 코스닥→유가증권 이전상장은 제외하였습니다. 출처: KIND 상장예비심사 기업 목록(2026-10-08 조회)"+(HASPD?" · 진행 상태는 예심 현황 업데이트 기준":"")+"."
+    "주3) 주관사명은 현재 사명, 승계사 기준입니다(예: 대우 → 미래에셋, 우리투자(구) → NH, 현대, KB투자 → KB, 동양 → 유안타).",
+    "주4) SPAC 신규상장, SPAC합병(존속, 소멸), 재상장, 코스닥→유가증권 이전상장은 제외하였습니다. 출처: KIND 상장예비심사 기업 목록(2026-10-08 조회)"+(HASPD?". 진행 상태는 예심 현황 업데이트 기준":"")+"."
   ].join("<br>");
   if(!PAST) return;
 
