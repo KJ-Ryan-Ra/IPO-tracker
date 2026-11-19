@@ -41,7 +41,7 @@
 @keyframes gsflash{0%,35%{background:rgba(250,178,25,.38);box-shadow:inset 3px 0 0 #d2992e}100%{background:transparent;box-shadow:none}}
 @media (max-width:1040px){.gs-hint{display:none}}@media (max-width:820px){.gs-lb span{display:none}.gs-in{max-width:none}}
 </style>
-<style id="pd-css">.pd-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 12px}.pd-bar .pd-lbl{font-size:11.5px;color:var(--ink-3);white-space:nowrap}.pd-bar .seg{flex:0 0 auto}</style></head>
+<style id="pd-css">.pd-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 12px}.pd-bar .pd-lbl{font-size:11.5px;color:var(--ink-3);white-space:nowrap}.pd-bar .seg{flex:0 0 auto}.pd-bar .pd-warn{font-size:11.5px;color:var(--ink-3)}.pd-bar .pd-warn:empty{display:none}</style></head>
 <body>
 <style>
 :root{
@@ -1106,7 +1106,7 @@ details.tg>summary:hover .tg-cv{color:var(--ink)}
 <section id="p-ps" class="hidden">
 <div id="ps-live">
   <div class="eyebrow">상장예비심사 진행현황</div>
-  <div class="pd-bar"><span class="pd-lbl">심사기간 비교 기준</span><div class="seg pd-per"></div></div><!--PD:BAR-->
+  <div class="pd-bar"><span class="pd-lbl">심사기간 비교 기준</span><div class="seg pd-per"></div><span class="pd-warn"></span></div><!--PD:BAR-->
   <div class="grid g6" id="ps-kpis"></div>
   <div style="margin-top:16px" class="grid g21">
     <div class="card">
@@ -2539,6 +2539,7 @@ SEC.push(function(){
   const host=$("#ps-diag"); if(!host) return;
   const ly=String(D.liveYear), PAST=String(YEAR)!==ly&&YEAR!==ALLK; host.style.display=PAST?"none":""; if(PAST) return;
   document.querySelectorAll(".pd-per").forEach(x=>x.innerHTML=PD_SEG());
+  document.querySelectorAll(".pd-warn").forEach(x=>x.textContent=PD_P==="1"?"※ 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 진행중임에 따라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.":"");
   const X=PDREF(), app=X.app, all=app.map(r=>r.d), qt=X.qt;
   const live=PRESUB.filter(r=>r.stage==="심사중"&&r.pending).map(r=>({r,el:r.revDays,s:X.st(r.mkt,r.revDays)}));
   const dot=x=>x.s&&x.s[0]==="장기 지연"?"var(--crit)":"var(--am400)";
@@ -2584,7 +2585,7 @@ SEC.push(function(){
   $("#pd-fn").innerHTML=`주1) 기준 기간: ${X.all?X.FR.slice(0,4)+"년 이후 전체 청구 건":PD_LB()+"("+X.FR.replace(/-/g,".")+" 이후) 청구 건"}. 심사기간은 청구일부터 승인일까지이며, 승인 후 상장, 효력만료, 공모철회, 상장철회 건을 포함합니다.<br>`+
     `주2) 상태: 경과일이 같은 시장(유가증권, 코스닥) 과거 승인 딜 중앙값 이하면 「통상」, 중앙값 초과 상위 25% 이하면 「지연」, 상위 25% 초과면 「장기 지연」으로 표시합니다.<br>`+
     `주3) 상장유형별 심사기간은 상장까지 완료된 딜만 집계했습니다.`+
-    (PD_P==="1"?`<br>주4) 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 중이라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.`:"");
+    (PD_P==="1"?`<br>주4) 최근 1년은 승인까지 오래 걸린 딜이 아직 심사 진행중임에 따라 집계에서 빠지므로, 기준이 실제보다 짧게 나올 수 있습니다.`:"");
 });
 /*PD:END*/
 /* ================= 예심 진행현황 ================= */
