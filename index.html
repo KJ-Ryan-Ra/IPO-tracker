@@ -5080,7 +5080,7 @@ render();
   const box=document.getElementById("tabs"); if(!box||box.dataset.nav) return; box.dataset.nav="1";
   const G=[["요약",["td","ov"]],["상장 전 파이프라인",["ps","pa","ud","pg","lv","sg","cal"]],["딜 구조 분석",["vl","fa","sr","rk","pv"]],
            ["상장 후 성과",["dl","pf","es","oh"]],["시장 · 하우스",["lt","ex"]]];
-  const SHORT={ps:t=>/결과/.test(t)?"예심 결과":"예심 진행현황",ud:()=>"예심 확약사항",pf:()=>"수익률",lv:()=>"유사사례 비교"};
+  const SHORT={ps:t=>/결과/.test(t)?"예심 결과":"예심 진행현황",ud:()=>"예심 확약사항",pf:()=>"수익률",lv:()=>"유사사례 비교",sg:()=>"신고서 단계 분석"};
   const NEW={es:"2026-12-02",oh:"2026-12-02",fa:"2026-12-02",pa:"2026-12-03",lv:"2026-12-04",sg:"2026-12-04"};                         // 이 날짜 전까지 NEW 표시
   const KEY="ipoNavClosed", D=window.__DATA__||{};
   const ls={get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}};
